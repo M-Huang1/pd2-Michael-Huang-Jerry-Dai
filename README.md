@@ -6,13 +6,13 @@ Michael Huang
 Jerry Dai
 
 Description
--Chinese Checkers OR
--Pokemon Maze
+- Candyland
 
 Instructions
 
 Data Structure/Algorithms
--Grid/PriorityQueue structure
--Djikstra's Algorithm for pathfinding
+-stacks (stack)
+-linked lists (map)
+-GUI
 
 
