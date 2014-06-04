@@ -1,5 +1,9 @@
 6/2/14
 -created README.md (Jerry)
 6/3/14
+in-class
 -finalized project ideas: Candyland (Michael & Jerry)
 -created skeleton files
+
+home
+-fleshed out skeleton files (Tile.java, Track.java, Player.java, Card.java, part of Deck.java) (Jerry)
