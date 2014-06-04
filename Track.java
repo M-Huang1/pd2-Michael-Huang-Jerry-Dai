@@ -63,5 +63,17 @@ public class Track{
 
     //methods
 
+    //get starting tile
+    public Tile getStart()
+    {
+	return start ;
+    }
+
+    //get finish line
+    public Tile getEnd()
+    {
+	return finish ;
+    }
+
     
 }

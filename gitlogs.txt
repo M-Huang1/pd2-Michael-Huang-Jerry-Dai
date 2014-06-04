@@ -7,3 +7,8 @@ in-class
 
 home
 -fleshed out skeleton files (Tile.java, Track.java, Player.java, Card.java, part of Deck.java) (Jerry)
+
+6/4/14
+in-class
+-GUI progress (Michael)
+-wrote most of Deck.java , fixed compile bugs, wrote a test (Jerry)

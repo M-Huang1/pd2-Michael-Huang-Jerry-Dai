@@ -25,4 +25,12 @@ public class Card{
 	this.color = color ;
     }
 
+    //methods
+
+    //get color
+    public Color getColor()
+    {
+	return color ;
+    }
+
 }
