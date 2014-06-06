@@ -37,11 +37,11 @@ public class Track{
 		Color c = null;
 		if(colorcount == 0)
 		    c = Color.RED ;
-		if(colorcount == 1)
+		else if(colorcount == 1)
 		    c = Color.YELLOW ;
-		if(colorcount == 2)
+		else if(colorcount == 2)
 		    c = Color.GREEN ;
-		if(colorcount == 3)
+		else if(colorcount == 3)
 		    c = Color.BLUE ;
 
 		//add next tile to the track
@@ -52,6 +52,8 @@ public class Track{
 		colorcount++ ;
 		if(colorcount > 3)
 		    colorcount = 0 ;
+
+		count++ ;
 
 	    }
 

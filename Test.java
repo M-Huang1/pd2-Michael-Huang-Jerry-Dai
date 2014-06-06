@@ -10,11 +10,14 @@ public class Test{
     {
 	
 	//make the track
-	Track map = new Track(50) ;
+	Track map = new Track(10) ;
 	Player player1 = new Player("Jerry",0,Color.PINK,map.getStart(),map) ;
-	
-	while(map.getStart().getNext()!=null)
-	    System.out.println(map.getStart().getNext().getColor().toString()) ;
+	Tile temp = map.getStart() ;
+	while(temp!=null)
+	    {
+		System.out.println(temp.getColor().toString()) ;
+		temp = temp.getNext() ;
+	    }
 
 
     }

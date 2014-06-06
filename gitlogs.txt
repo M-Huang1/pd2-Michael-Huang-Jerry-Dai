@@ -12,3 +12,9 @@ home
 in-class
 -GUI progress (Michael)
 -wrote most of Deck.java , fixed compile bugs, wrote a test (Jerry)
+
+JPROM
+
+6/5/14
+home
+-fixed creating the Track bug, before colors would not cycle
