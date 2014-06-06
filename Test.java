@@ -10,7 +10,7 @@ public class Test{
     {
 	
 	//make the track
-	Track map = new Track(10) ;
+	Track map = new Track(144) ;
 	Player player1 = new Player("Jerry",0,Color.PINK,map.getStart(),map) ;
 	Tile temp = map.getStart() ;
 	while(temp!=null)

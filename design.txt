@@ -1,0 +1,22 @@
+Candyland
+-4 players (or AI)
+-menu
+	- start game
+	  - (options)
+	- instructions
+	- credits
+-game
+	- player number
+	- GO
+	- track = 140 ish tiles long
+	  - start and end
+	  - (teleporting tiles)
+	- avatar
+	  - each with turn 
+	  - (print box)
+	- ROLL button
+	- tells you the card
+	  - coordinates
+	- black tile = win
+	- 
+	

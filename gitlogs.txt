@@ -18,3 +18,7 @@ JPROM
 6/5/14
 home
 -fixed creating the Track bug, before colors would not cycle
+
+6/6/14
+in-class
+-created design outline
