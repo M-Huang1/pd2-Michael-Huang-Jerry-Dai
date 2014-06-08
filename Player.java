@@ -22,7 +22,7 @@ public class Player{
 	name = "CPU" ;
 	order = -1 ;
 	color = Color.WHITE ;
-	loc = null ;
+	loc = new Tile() ;
 	track = null ;
     }
 
@@ -90,6 +90,17 @@ public class Player{
     public Track getTrack()
     {
 	return track ;
+    }
+
+    //get coordinates of current tile
+    public int getXcor()
+    {
+	return loc.getXcor() ;
+    }
+
+    public int getYcor()
+    {
+	return loc.getYcor() ;
     }
 
 }

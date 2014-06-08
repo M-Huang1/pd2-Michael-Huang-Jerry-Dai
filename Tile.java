@@ -12,7 +12,7 @@ public class Tile{
     private Tile next ;
     private Color color ;
     private ArrayList<Player> players ;
-    private int order ;
+    private int order,xcor,ycor ;
 
     //constructors
     public Tile()
@@ -21,14 +21,18 @@ public class Tile{
 	color = Color.WHITE ;
 	players = new ArrayList<Player>() ;
 	order = -1 ;
+	xcor = -1 ;
+	ycor = -1 ;
     }
 
-    public Tile(Color color, int order)
+    public Tile(Color color, int order, int xcor, int ycor)
     {
 	next = null ;
 	this.color = color ;
 	players = new ArrayList<Player>() ;
 	this.order = order ;
+	this.xcor = xcor ;
+	this.ycor = ycor ;
     }
 
     //methods
@@ -64,6 +68,27 @@ public class Tile{
     public int getOrder()
     {
 	return order ;
+    }
+
+    //set/get coordinates
+    public void setXcor(int xcor)
+    {
+	this.xcor = xcor ;
+    }
+
+    public int getXcor()
+    {
+	return xcor ;
+    }
+
+    public void setYcor(int ycor)
+    {
+	this.ycor = ycor ;
+    }
+
+    public int getYcor()
+    {
+	return ycor ;
     }
 
     //interact with players on the tile

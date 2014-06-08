@@ -25,7 +25,7 @@ public class Track{
     {
 	this.length = length ;
 	//start line is white
-	start = new Tile(Color.WHITE, 0);
+	start = new Tile(Color.WHITE, 0, 0, 0);
 	
 	//track creation
 	Tile temp = start ;
@@ -45,7 +45,7 @@ public class Track{
 		    c = Color.BLUE ;
 
 		//add next tile to the track
-		temp.setNext(new Tile(c, count+1)) ;
+		temp.setNext(new Tile(c, count+1, count+1, 0)) ;
 		temp = temp.getNext() ;
 
 		//reset color cycle
