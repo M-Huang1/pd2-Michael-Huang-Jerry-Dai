@@ -29,3 +29,7 @@ SAT STUDYING
 home
 -added coordinates for Tiles which players can access (Jerry)
 -preparing for GUI implementation now
+
+6/8/14
+home
+-added a toString for the map for now, not final (Jerry)

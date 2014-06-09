@@ -25,7 +25,7 @@ public class Track{
     {
 	this.length = length ;
 	//start line is white
-	start = new Tile(Color.WHITE, 0, 0, 0);
+	start = new Tile(Color.WHITE, 0, 0, 1);
 	
 	//track creation
 	Tile temp = start ;
@@ -45,7 +45,16 @@ public class Track{
 		    c = Color.BLUE ;
 
 		//add next tile to the track
-		temp.setNext(new Tile(c, count+1, count+1, 0)) ;
+		//-randomize tile coordinates (always within +-1 range of each other)
+		int ycoor = temp.getYcor() ;
+		Random rand = new Random() ;
+		int r = temp.getYcor() + rand.nextInt(3)-1 ;
+		if(r==length)
+		    r--;
+		if(r<0)
+		    r++;
+		
+		temp.setNext(new Tile(c, count+1, count+1, r )) ;
 		temp = temp.getNext() ;
 
 		//reset color cycle
@@ -77,5 +86,54 @@ public class Track{
 	return finish ;
     }
 
-    
+    //string representation of the track
+    public String toString()
+    {
+
+	String[][] grid = new String[length][length] ;
+	Tile temp = start ;
+	String answer = "" ;
+
+	for(int a = 0 ; a < length ; a++)
+	    {
+		for(int b = 0 ; b < length ; b++)
+		    {				
+			grid[a][b] = "-" ;
+		    }
+	    }
+
+	while(temp.getNext()!=null)
+	    {
+		int x = temp.getXcor() ;
+		int y = temp.getYcor() ;
+		
+		if(temp.getOrder()==0)
+		    grid[x][y] = "S" ;
+		else if(temp.getOrder()==(length-1))
+		    grid[x][y] = "E" ;
+		else if(temp.getColor()==Color.RED)
+		    grid[x][y] = "R" ;
+		else if(temp.getColor()==Color.YELLOW)
+		    grid[x][y] = "Y" ;
+		else if(temp.getColor()==Color.GREEN)
+		    grid[x][y] = "G" ;    
+		else if(temp.getColor()==Color.BLUE)
+		    grid[x][y] = "B" ;
+
+		temp = temp.getNext() ;
+
+	    }
+
+	for(int c = 0 ; c < length ; c++)
+	    {
+		for(int d = 0 ; d < length ; d++)
+		    {				
+			answer += grid[c][d] ;
+		    }
+		answer+= "\n" ;
+	    }
+	
+	return answer ;
+
+    }
 }
