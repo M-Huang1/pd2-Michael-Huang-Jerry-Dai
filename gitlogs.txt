@@ -33,7 +33,11 @@ home
 6/8/14
 home
 -added a toString for the map for now, not final (Jerry)
-6/8/14
-home
-created a simple design of the map(Michael)
+-created a simple design of the map(Michael)
+
+6/9/14
+in-class
+-fixed Map bugs, add Map features (Michael)
+-fixed Deck.java bugs (Jerry)
+
 

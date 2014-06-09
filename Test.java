@@ -28,7 +28,15 @@ public class Test{
 	System.out.println("B: BLUE TILE");
 	System.out.println("E: END TILE\n");
 	System.out.println(map.toString()) ;
-
+	Deck d = new Deck() ;
+	d.create();
+	d.shuffle();
+	int c = 0;
+	while(c < 50)
+	    {   
+		System.out.println(d.draw()) ;
+		c++ ;
+	    }
     }
 
 }
