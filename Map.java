@@ -36,7 +36,7 @@ public class Map extends JPanel {
     public static final int PIXELS = 200;
 
     private final Color[][] terrainGrid;
-    private final JButton XD= new JButton("Button1");
+    private final JButton XD= new JButton("Draw Card");
     private final JButton XA= new JButton("Button2");
     private final JButton XC= new JButton("Button3");
     private  JLabel Tina = new JLabel("Tina is a person");
@@ -95,24 +95,27 @@ public class Map extends JPanel {
 	add(XC);
 	add(Tina);
     }
+
+    Deck deck = new Deck() ;
+
     private class ButtonHandler implements ActionListener{
 	int count = 0;
 	public void actionPerformed(ActionEvent e){
 	    if(e.getSource()==XD){
-		Random rand = new Random();
+		Card current = deck.draw() ;
+		String txt = "Color drawn: " ;
 		
-		Color d = TERRAIN[rand.nextInt(4)];
-		if (d.equals(Color.RED)){
-		    Tina.setText("Red");
+		if (current.getColor().equals(Color.RED)){
+		    Tina.setText(txt + "RED");
 		}
-		else if(d.equals(Color.YELLOW)){
-		    Tina.setText("Yellow");
+		else if(current.getColor().equals(Color.YELLOW)){
+		    Tina.setText(txt + "YELLOW");
 		}
-		else if(d.equals(Color.GREEN)){
-		    Tina.setText("Green");
+		else if(current.getColor().equals(Color.GREEN)){
+		    Tina.setText(txt + "GREEN");
 		}
-		else {
-		    Tina.setText("Blue");
+		else if(current.getColor().equals(Color.BLUE)){
+		    Tina.setText(txt + "BLUE");
 		}
 		
 		
