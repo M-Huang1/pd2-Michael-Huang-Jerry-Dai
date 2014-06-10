@@ -40,4 +40,9 @@ in-class
 -fixed Map bugs, add Map features (Michael)
 -fixed Deck.java bugs (Jerry)
 
+6/10/14
+in-class
+-fixed Map bugs, added more Map features (Michael)
+-completed Deck.java (Jerry)
+
 

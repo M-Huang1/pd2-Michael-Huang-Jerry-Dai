@@ -7,9 +7,9 @@ import java.awt.Color ;
 public class Deck{
 
     //instance variables
-    //-represents the stack or the deck of cards, size of deck,  and bottom of the deck
+    //-represents the stack or the deck of cards and size of deck
     //-note: LENGTH must be 40
-    private Stack stack, bottom ;
+    private Stack stack, tempdeck, bottom ;
     private int length ;
     private static final int LENGTH = 40 ;
     
@@ -17,8 +17,9 @@ public class Deck{
     public Deck()
     {
 	stack = new Stack() ;
-	length = LENGTH ;
+	tempdeck = new Stack() ;
 	bottom = new Stack() ;
+	length = LENGTH ;
     }
 
     //methods
@@ -109,20 +110,26 @@ public class Deck{
 
     //draw
     //-draw a card from top of deck
-    //-put card to bottom after done
-    //-after all cards are cycle, move bottom of the deck to actual deck
+    //-put card to tempdeck after done
+    //-after all cards are cycled, move tempdeck to bottom of the deck to actual deck (returns to original order) 
 
     public Card draw()
     {
 	//switch decks if empty
 	if(stack.empty())
 	    {
+		System.out.println(stack.empty());
+		while(!tempdeck.empty())
+		    {
+			bottom.push(tempdeck.pop()) ;
+		    }
 		stack = bottom ;
-		bottom = null ;
+		tempdeck = new Stack() ;
+		bottom = new Stack() ;
 	    }
-
+		
 	//pop the next card
-	bottom.push(stack.peek()) ;
+	tempdeck.push(stack.peek()) ;
 	return (Card)(stack.pop()) ;
 
     }

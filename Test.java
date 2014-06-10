@@ -1,3 +1,4 @@
+
 //test class for testing purposes only
 
 import java.util.* ;
@@ -34,6 +35,7 @@ public class Test{
 	int c = 0;
 	while(c < 50)
 	    {   
+		System.out.println(c);
 		System.out.println(d.draw()) ;
 		c++ ;
 	    }
