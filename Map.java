@@ -27,7 +27,7 @@ public class Map extends JPanel {
     
 
     public static final Color[] TERRAIN = {
-        Red,Blue,Green,Yellow
+        Red,Yellow,Green,Blue
     };
 
     public static final int NR = 10;
@@ -69,7 +69,7 @@ public class Map extends JPanel {
 			dd++;
 		    }
 		    else if(dd==1){
-			this.terrainGrid[i][j]= Blue;
+			this.terrainGrid[i][j]= Yellow;
 			dd++;
 		    }
 		    else if(dd==2){
@@ -77,7 +77,7 @@ public class Map extends JPanel {
 			dd++;
 		    }
 		    else{
-			this.terrainGrid[i][j]= Yellow;
+			this.terrainGrid[i][j]= Blue;
 			dd=0;
 		    }
 		}

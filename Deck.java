@@ -7,19 +7,19 @@ import java.awt.Color ;
 public class Deck{
 
     //instance variables
-    //-represents the stack or the deck of cards, size of deck,  and bottom of the deck
+    //-represents the stack or the deck of cards and size of deck
     //-note: LENGTH must be 40
-    private Stack stack ;
+    private Stack stack, tempdeck, bottom ;
     private int length ;
     private static final int LENGTH = 40 ;
-    private Deck bottom ;
     
     //constructors
     public Deck()
     {
 	stack = new Stack() ;
+	tempdeck = new Stack() ;
+	bottom = new Stack() ;
 	length = LENGTH ;
-	bottom = new Deck() ;
     }
 
     //methods
@@ -44,34 +44,31 @@ public class Deck{
 	//all the cards 
 	ArrayList<Card> cards = new ArrayList<Card>() ;
 
-	//create new deck only if deck is empty
-	if(length == 0)
+	//creates 20 1-tile movement cards
+	for(int x = 0 ; x < 5 ; x++)
 	    {
-		//creates 20 1-tile movement cards
-		for(int x = 0 ; x < 5 ; x++)
-		    {
-			cards.add(new Card(1,Color.RED)) ;
-			cards.add(new Card(1,Color.BLUE)) ;
-			cards.add(new Card(1,Color.GREEN)) ;
-			cards.add(new Card(1,Color.YELLOW)) ;
-		    }
-		//creates 8 2-tile movement cards
-		for(int x = 0 ; x < 2 ; x++)
-		    {
-			cards.add(new Card(2,Color.RED)) ;
-			cards.add(new Card(2,Color.BLUE)) ;
-			cards.add(new Card(2,Color.GREEN)) ;
-			cards.add(new Card(2,Color.YELLOW)) ;
-		    }
-		//creates 12 -1-tile movement cards
-		for(int x = 0 ; x < 3 ; x++)
-		    {
-			cards.add(new Card(-1,Color.RED)) ;
-			cards.add(new Card(-1,Color.BLUE)) ;
-			cards.add(new Card(-1,Color.GREEN)) ;
-			cards.add(new Card(-1,Color.YELLOW)) ;
-		    }
+		cards.add(new Card(1,Color.RED)) ;
+		cards.add(new Card(1,Color.BLUE)) ;
+		cards.add(new Card(1,Color.GREEN)) ;
+		cards.add(new Card(1,Color.YELLOW)) ;
 	    }
+	//creates 8 2-tile movement cards
+	for(int x = 0 ; x < 2 ; x++)
+	    {
+		cards.add(new Card(2,Color.RED)) ;
+		cards.add(new Card(2,Color.BLUE)) ;
+		cards.add(new Card(2,Color.GREEN)) ;
+		cards.add(new Card(2,Color.YELLOW)) ;
+	    }
+	//creates 12 -1-tile movement cards
+	for(int x = 0 ; x < 3 ; x++)
+	    {
+		cards.add(new Card(-1,Color.RED)) ;
+		cards.add(new Card(-1,Color.BLUE)) ;
+		cards.add(new Card(-1,Color.GREEN)) ;
+		cards.add(new Card(-1,Color.YELLOW)) ;
+	    }
+	    
 
 	for(Card c : cards)
 	    {
@@ -106,27 +103,32 @@ public class Deck{
 	//move back to stack
 	for(Card c : newdeck)
 	    {
-		stack.push(c) ;
+		stack.push((Card)(c)) ;
 	    }
 
     }
 
     //draw
     //-draw a card from top of deck
-    //-put card to bottom after done
-    //-after all cards are cycle, move bottom of the deck to actual deck
+    //-put card to tempdeck after done
+    //-after all cards are cycled, move tempdeck to bottom of the deck to actual deck (returns to original order) 
 
     public Card draw()
     {
 	//switch decks if empty
 	if(stack.empty())
 	    {
-		stack = bottom.getStack() ;
-		bottom = null ;
+		while(!tempdeck.empty())
+		    {
+			bottom.push(tempdeck.pop()) ;
+		    }
+		stack = bottom ;
+		tempdeck = new Stack() ;
+		bottom = new Stack() ;
 	    }
-
+		
 	//pop the next card
-	bottom.getStack().push(stack.peek()) ;
+	tempdeck.push(stack.peek()) ;
 	return (Card)(stack.pop()) ;
 
     }

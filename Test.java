@@ -1,3 +1,4 @@
+
 //test class for testing purposes only
 
 import java.util.* ;
@@ -28,7 +29,26 @@ public class Test{
 	System.out.println("B: BLUE TILE");
 	System.out.println("E: END TILE\n");
 	System.out.println(map.toString()) ;
-
+	Deck d = new Deck() ;
+	d.create();
+	d.shuffle();
+	int c = 0;
+	int e = 0;
+	int f = 1;
+	while(c < 50)
+	    {   
+		System.out.println("Cycle: " + f + " Card#: " + e);
+		System.out.println(d.draw()) ;
+		c++ ;
+		if(e==39)
+		    {
+			e=0 ;
+			f++ ;
+		    }
+		else
+		    e++ ;
+		
+	    }
     }
 
 }
