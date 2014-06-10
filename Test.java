@@ -33,11 +33,21 @@ public class Test{
 	d.create();
 	d.shuffle();
 	int c = 0;
+	int e = 0;
+	int f = 1;
 	while(c < 50)
 	    {   
-		System.out.println(c);
+		System.out.println("Cycle: " + f + " Card#: " + e);
 		System.out.println(d.draw()) ;
 		c++ ;
+		if(e==39)
+		    {
+			e=0 ;
+			f++ ;
+		    }
+		else
+		    e++ ;
+		
 	    }
     }
 

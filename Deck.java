@@ -118,7 +118,6 @@ public class Deck{
 	//switch decks if empty
 	if(stack.empty())
 	    {
-		System.out.println(stack.empty());
 		while(!tempdeck.empty())
 		    {
 			bottom.push(tempdeck.pop()) ;
