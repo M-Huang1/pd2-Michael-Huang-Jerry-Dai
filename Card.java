@@ -32,5 +32,11 @@ public class Card{
     {
 	return color ;
     }
+	
+    //get movement
+    public int getMovement()
+    {
+	return movement ;
+    }
 
 }

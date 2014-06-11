@@ -45,4 +45,8 @@ in-class
 -fixed Map bugs, added more Map features (Michael)
 -completed Deck.java (Jerry)
 
+home
+-first combining of GUI and files:
+	- added Deck + button features to GUI (Jerry)
+
 

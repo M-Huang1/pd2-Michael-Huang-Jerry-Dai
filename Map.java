@@ -6,20 +6,9 @@ import java.util.Random;
 
 
 public class Map extends JPanel {
-    public void  Reverse(Color[][] x,int y,int d){
-	for(int xx =0;xx<5;xx++){
-	    Color temp = x[y][xx];
-	    x[y][xx]= x[y][9-xx];
-	    x[y][9-xx]= temp;
-	}
-	for(int xx =0;xx<5;xx++){
-	    Color temp = x[d][xx];
-	    x[d][xx]= x[d][9-xx];
-	    x[d][9-xx]= temp;
-	}
-	
-    }
-	
+ 
+    //instance variables
+  
     public static final Color Red = Color.RED;
     public static final Color Blue = Color.BLUE;
     public static final Color Green = Color.GREEN;
@@ -37,9 +26,14 @@ public class Map extends JPanel {
 
     private final Color[][] terrainGrid;
     private final JButton XD= new JButton("Draw Card");
-    private final JButton XA= new JButton("Button2");
+    private final JButton XA= new JButton("Shuffle Deck");
     private final JButton XC= new JButton("Button3");
     private  JLabel Tina = new JLabel("Tina is a person");
+
+    private static Deck gamedeck ;
+
+    //methods
+
     public Map(){
         this.terrainGrid = new Color[NR][NC];
         int dd =0;
@@ -89,6 +83,7 @@ public class Map extends JPanel {
         setPreferredSize(new Dimension(preferredWidth, preferredHeight));
 	ButtonHandler BH = new ButtonHandler();
 	XD.addActionListener(BH);
+	XA.addActionListener(BH);
 	
 	add(XD);
 	add(XA);
@@ -96,33 +91,34 @@ public class Map extends JPanel {
 	add(Tina);
     }
 
-    Deck deck = new Deck() ;
-
     private class ButtonHandler implements ActionListener{
 	int count = 0;
+
 	public void actionPerformed(ActionEvent e){
 	    if(e.getSource()==XD){
-		Card current = deck.draw() ;
+		Card current = gamedeck.draw() ;
 		String txt = "Color drawn: " ;
 		
 		if (current.getColor().equals(Color.RED)){
-		    Tina.setText(txt + "RED");
+		    Tina.setText(txt + "RED " + current.getMovement());
 		}
 		else if(current.getColor().equals(Color.YELLOW)){
-		    Tina.setText(txt + "YELLOW");
+		    Tina.setText(txt + "YELLOW " + current.getMovement());
 		}
 		else if(current.getColor().equals(Color.GREEN)){
-		    Tina.setText(txt + "GREEN");
+		    Tina.setText(txt + "GREEN " + current.getMovement());
 		}
 		else if(current.getColor().equals(Color.BLUE)){
-		    Tina.setText(txt + "BLUE");
+		    Tina.setText(txt + "BLUE " + current.getMovement());
 		}
-		
-		
-		
-	    }
+             }
+	     if(e.getSource()==XA){
+		gamedeck.shuffle() ;	
+		Tina.setText("Game deck was shuffled!") ;
+	     }
 	}
     }
+
     @Override
     public void paintComponent(Graphics g) {
    
@@ -154,10 +150,28 @@ public class Map extends JPanel {
 	g2.fill(p3);
     }
 
+    public void  Reverse(Color[][] x,int y,int d){
+	for(int xx =0;xx<5;xx++){
+	    Color temp = x[y][xx];
+	    x[y][xx]= x[y][9-xx];
+	    x[y][9-xx]= temp;
+	}
+	for(int xx =0;xx<5;xx++){
+	    Color temp = x[d][xx];
+	    x[d][xx]= x[d][9-xx];
+	    x[d][9-xx]= temp;
+	}
+	
+    }
+	
+
     public static void main(String[] args) {
        
         /*SwingUtilities.invokeLater(new Runnable() {
 	  public void run() {*/
+		gamedeck = new Deck() ;
+   		gamedeck.create();
+    		gamedeck.shuffle() ;
                 JFrame frame = new JFrame("Game");
                 Map map = new Map();
                 frame.add(map);
