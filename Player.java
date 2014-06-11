@@ -3,6 +3,7 @@
 import java.util.* ;
 import java.io.*  ;
 import java.awt.Color ;
+import java.awt.geom.*;
 
 public class Player{
 
@@ -14,6 +15,7 @@ public class Player{
     private Color color ;
     private Tile loc ;
     private Track track ;
+    private Ellipse2D shape;
 
     //constructors
 
@@ -53,7 +55,12 @@ public class Player{
     {
 	this.order = order ;
     }
-
+    public void setShape(Ellipse2D x){
+	shape = x;
+    }
+    public Ellipse2D getShape(){
+	return shape;
+    }
     public int getOrder()
     {
 	return order ;
@@ -71,12 +78,12 @@ public class Player{
     }
 
     //set/get tile
-    public void setLoc(Tile loc)
+    public void setTile(Tile loc)
     {
 	this.loc = loc ;
     }
     
-    public Tile getLoc()
+    public Tile getTile()
     {
 	return loc ;
     }

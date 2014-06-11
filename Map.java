@@ -32,16 +32,16 @@ public class Map extends JPanel {
 
     private static Deck gamedeck = new Deck();
     private static Track gametrack = new Track(54);
-    private static Tile temp= gametrack.getStart();
+    
     
     //methods2
 
     public Map(){
 
         this.terrainGrid = new Color[NR][NC];
-	int rectWidth = 66;
-        int rectHeight = 66;
-	
+	int rectWidth = 70;
+        int rectHeight = 70;
+	Tile temp = gametrack.getStart();
 
         for (int i = 0; i < NR; i++) {
             for (int j = 0; j < NC; j++) {
@@ -69,7 +69,7 @@ public class Map extends JPanel {
 	    }
 	    
 	}
-
+	
 	
 	    
 	Reverse(terrainGrid,2,6);
