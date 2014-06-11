@@ -62,8 +62,14 @@ public class Map extends JPanel {
 		}
 		else{
 		    this.terrainGrid[i][j] = temp.getColor();
+		    
 		    temp.setXcor(i * rectWidth);
-		    temp.setYcor(j* rectHeight);
+		    if(i== 2 || i==6){
+		    temp.setYcor(630-j* rectHeight);
+		    }
+		    else{
+			temp.setYcor(j*rectHeight);
+		    }
 		    temp = temp.getNext() ;
 		}
 	    }
@@ -153,7 +159,7 @@ public class Map extends JPanel {
 	Ellipse2D p2 = new Ellipse2D.Double(40,0,20,20);
 	Ellipse2D p3 = new Ellipse2D.Double(40,40,20,20);
 	Graphics2D g2 = (Graphics2D)g;
-	
+	g2.setPaint(Color.ORANGE);
 	g2.fill(pl1.getShape());
 	g2.fill(p1);
 	g2.fill(p2);
@@ -175,12 +181,24 @@ public class Map extends JPanel {
     }
     public void goToColor(Player p,Color c){
 	Tile pTemp = p.getTile().getNext();
+	try{
 	while(!pTemp.getColor().equals(c)){
 	    pTemp = pTemp.getNext();
+	    
+	}
+	p.setShape(new Ellipse2D.Double(pTemp.getXcor(),pTemp.getYcor(),20,20));
+	}
+	catch(Exception e){
+	    pTemp= gametrack.getEnd();
+	    
+	    p.setShape(new Ellipse2D.Double(620,620,20,20));
+	    
+	    //Win();
 	}
 	p.setTile(pTemp);
 	
-	p.setShape(new Ellipse2D.Double(pTemp.getXcor(),pTemp.getYcor(),20,20));
+	
+	
     }
 	    
 
