@@ -1,4 +1,4 @@
-//this class represents individual spaces on the board
+//this class represents individual spaces on the board (Nodes)
 
 import java.util.* ;
 import java.io.* ;
@@ -9,10 +9,10 @@ public class Tile{
     //instance variables
     //-represent next space infront, color of the tile, all players on the tile, and order in relation to other tiles
 
-    private Tile next,First ;
+    private Tile next ;
     private Color color ;
     private ArrayList<Player> players ;
-    private int order,xcor,ycor ;
+    private int order, xcor, ycor ;
 
     //constructors
     public Tile()
@@ -25,7 +25,7 @@ public class Tile{
 	ycor = -1 ;
     }
 
-    public Tile(Color color,Tile First, int order, int xcor, int ycor)
+    public Tile(Color color, int order, int xcor, int ycor)
     {
 	next = null ;
 	this.color = color ;
@@ -46,11 +46,7 @@ public class Tile{
     public Tile getNext()
     {
 	return next ;
-    }
-    public Tile getFirst(){
-	return First;
-    }
-	   
+    }  
 
     //set/get color
     public void setColor(Color color)

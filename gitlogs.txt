@@ -53,3 +53,7 @@ home
 in-class
 -player movement (Michael)
 -bug fixes
+
+home
+-added backward movement, cleaned up code (Jerry)
+	-**moved main method to new Game.java class, now this is main executable file

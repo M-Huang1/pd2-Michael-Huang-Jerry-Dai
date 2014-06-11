@@ -1,4 +1,4 @@
-//this class represents the game board
+//this class represents the game track (Linked List Data Structure)
 
 import java.util.* ;
 import java.io.* ;
@@ -25,7 +25,7 @@ public class Track{
     {
 	this.length = length ;
 	//start line is white
-	start = new Tile(Color.WHITE,start, 0, 0, 0);
+	start = new Tile(Color.WHITE, 0, 0, 0);
 	
 	//track creation
 	Tile temp = start ;
@@ -44,14 +44,15 @@ public class Track{
 		else if(colorcount == 3)
 		    c = Color.BLUE ;
 
-		temp.setNext(new Tile(c,start, count+1, count+1, 0 )) ;
+		//create next Tile in Linked List
+		temp.setNext(new Tile(c, count+1, count+1, 0 )) ;
+		temp.getNext().setOrder(count+1) ;
 		temp = temp.getNext() ;
 
 		//reset color cycle
 		colorcount++ ;
 		if(colorcount > 3)
 		    colorcount = 0 ;
-
 		count++ ;
 
 	    }

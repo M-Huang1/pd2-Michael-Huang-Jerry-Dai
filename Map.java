@@ -1,3 +1,5 @@
+//this class creates the GUI map
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -33,14 +35,19 @@ public class Map extends JPanel {
     private static Deck gamedeck = new Deck();
     private static Track gametrack = new Track(54);
     
-    
-    //methods2
+    //constructor
+    //creates grid, translates Deck (Stack) onto GUI (represented by colored Tiles)
+    //creates buttons, etc.
 
-    public Map(){
-
+    public Map(Deck gamedeck, Track gametrack){
+	
+	this.gamedeck = gamedeck ;
+	this.gametrack = gametrack ;
         this.terrainGrid = new Color[NR][NC];
+
 	int rectWidth = 70;
         int rectHeight = 70;
+
 	Tile temp = gametrack.getStart();
 
         for (int i = 0; i < NR; i++) {
@@ -50,10 +57,8 @@ public class Map extends JPanel {
 			terrainGrid[i][j] = temp.getColor() ;
 			temp.setXcor(i * rectWidth);
 			temp.setYcor(j* rectHeight);
-			temp = temp.getNext() ;
-			
-		    }
-		    
+			temp = temp.getNext() ;		
+		    }    
 		    else{
 			this.terrainGrid[i][j]= Color.PINK;}
 		}
@@ -75,19 +80,26 @@ public class Map extends JPanel {
 	    }
 	    
 	}
-	
-	
-	    
+	   
+	//fix grid representation in GUI
 	Reverse(terrainGrid,2,6);
+
         int preferredWidth = NC *PIXELS;
         int preferredHeight = NR * PIXELS;
+
         setPreferredSize(new Dimension(preferredWidth, preferredHeight));
+
+	//give buttons functionality
 	ButtonHandler BH = new ButtonHandler();
 	XD.addActionListener(BH);
 	XA.addActionListener(BH);
 	XC.addActionListener(BH);
+
+	//create players
 	pl1 = new Player("Bob",1,Color.RED,gametrack.getStart(),gametrack);
 	pl1.setShape(new Ellipse2D.Double(0,0,20,20));
+
+	//add objects to the map
 	add(XD);
 	add(XA);
 	add(XC);
@@ -95,6 +107,7 @@ public class Map extends JPanel {
 
     }
 
+    //this class controls user-button interaction
     private class ButtonHandler implements ActionListener{
 	int count = 0;
 
@@ -105,19 +118,19 @@ public class Map extends JPanel {
 		
 		if (current.getColor().equals(Color.RED)){
 		    Tina.setText(txt + "RED " + current.getMovement());
-		    goToColor(pl1,Color.RED);
+		    goToColor(pl1,current);
 		}
 		else if(current.getColor().equals(Color.YELLOW)){
 		    Tina.setText(txt + "YELLOW " + current.getMovement());
-		    goToColor(pl1,Color.YELLOW);
+		    goToColor(pl1,current);
 		}
 		else if(current.getColor().equals(Color.GREEN)){
 		    Tina.setText(txt + "GREEN " + current.getMovement());
-		    goToColor(pl1,Color.GREEN);
+		    goToColor(pl1,current);
 		}
 		else if(current.getColor().equals(Color.BLUE)){
 		    Tina.setText(txt + "BLUE " + current.getMovement());
-		    goToColor(pl1,Color.BLUE);
+		    goToColor(pl1,current);
 		}
 		repaint();
              }
@@ -131,6 +144,9 @@ public class Map extends JPanel {
 	}
     }
 
+    //methods
+	
+    //fills in
     @Override
     public void paintComponent(Graphics g) {
    
@@ -146,8 +162,7 @@ public class Map extends JPanel {
                
                 int x = i * rectWidth;
                 int y = j * rectHeight;
-		
-		
+			
                 Color terrainColor = terrainGrid[i][j];
                 g.setColor(terrainColor);
                 g.fillRect(x, y, rectWidth, rectHeight);
@@ -164,14 +179,18 @@ public class Map extends JPanel {
 	g2.fill(p1);
 	g2.fill(p2);
 	g2.fill(p3);
+
     }
 
+    //flips the XY of the 2D array for an accurate GUI representation
     public void  Reverse(Color[][] x,int y,int d){
+
 	for(int xx =0;xx<5;xx++){
 	    Color temp = x[y][xx];
 	    x[y][xx]= x[y][9-xx];
 	    x[y][9-xx]= temp;
 	}
+
 	for(int xx =0;xx<5;xx++){
 	    Color temp = x[d][xx];
 	    x[d][xx]= x[d][9-xx];
@@ -179,48 +198,59 @@ public class Map extends JPanel {
 	}
 	
     }
-    public void goToColor(Player p,Color c){
-	Tile pTemp = p.getTile().getNext();
-	try{
-	while(!pTemp.getColor().equals(c)){
-	    pTemp = pTemp.getNext();
-	    
-	}
+	
+    //player movement based on card drawn
+    public void goToColor(Player p, Card c){
+
+	int move = c.getMovement() ;
+	Tile pTemp = p.getTile().getNext(); ;
+
+	//forward movement
+	if(move > 0)
+	    {
+		while(move > 0)
+		    {
+			try
+			{
+	    		    while(!pTemp.getColor().equals(c.getColor()))
+				{
+	   			    pTemp = pTemp.getNext();
+	    			}
+			}
+			//exception means the player has reached the end of the track, has won
+			catch(Exception e)
+			{
+	    		    pTemp= gametrack.getEnd();  
+	    		    p.setShape(new Ellipse2D.Double(620,620,20,20));	    
+			}
+			//this allows movement to loop if a card with movement 2 is drawn
+			if(move > 1)
+			    {
+			    	pTemp = pTemp.getNext() ;
+			    }
+			move-- ;
+		    }
+	    }
+	//backward movement
+	else
+	    {
+		pTemp = gametrack.getStart() ;
+		if(!(p.getTile().getOrder()-4 < 0))
+		    {
+			while(pTemp.getOrder() != p.getTile().getOrder()-4)
+		    	    {
+				pTemp = pTemp.getNext() ;
+		    	    }
+			while( pTemp.getColor() != c.getColor() )
+			    {
+				pTemp = pTemp.getNext() ;
+			    }
+	    	    }Tile temp = gametrack.getStart();
+	    }
+
 	p.setShape(new Ellipse2D.Double(pTemp.getXcor(),pTemp.getYcor(),20,20));
-	}
-	catch(Exception e){
-	    pTemp= gametrack.getEnd();
-	    
-	    p.setShape(new Ellipse2D.Double(620,620,20,20));
-	    
-	    //Win();
-	}
 	p.setTile(pTemp);
 	
-	
-	
-    }
-	    
-
-    public static void main(String[] args) {
-       
-        /*SwingUtilities.invokeLater(new Runnable() {
-	  public void run() {*/
-
-		//initialize game components
-		gamedeck = new Deck() ;
-   		gamedeck.create();
-    		gamedeck.shuffle() ;
-		gametrack = new Track(54);
-
-		//initialize map components
-                JFrame frame = new JFrame("Game");
-                Map map = new Map();
-                frame.add(map);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(700,700);
-                frame.setVisible(true);
-
     }
            
 }

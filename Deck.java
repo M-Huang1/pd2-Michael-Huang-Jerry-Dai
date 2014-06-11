@@ -1,4 +1,4 @@
-//this class represents the deck of cards
+//this class represents the deck of cards (Stack Data Structure)
 
 import java.util.* ;
 import java.io.* ;

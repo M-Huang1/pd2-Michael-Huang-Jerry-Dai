@@ -1,4 +1,4 @@
-//this class represents a card
+//this class represents a card (Nodes)
 
 import java.util.* ;
 import java.io.* ;

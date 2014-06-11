@@ -55,12 +55,7 @@ public class Player{
     {
 	this.order = order ;
     }
-    public void setShape(Ellipse2D x){
-	shape = x;
-    }
-    public Ellipse2D getShape(){
-	return shape;
-    }
+  
     public int getOrder()
     {
 	return order ;
@@ -108,6 +103,17 @@ public class Player{
     public int getYcor()
     {
 	return loc.getYcor() ;
+    }
+
+    //set/get shape
+    public void setShape(Ellipse2D shape)
+    {
+	this.shape = shape ;
+    }
+
+    public Ellipse2D getShape()
+    {
+	return shape ;
     }
 
 }
