@@ -49,4 +49,7 @@ home
 -first combining of GUI and files:
 	- added Deck and Track + button features to GUI (Jerry)
 
-
+6/11/14
+in-class
+-player movement (Michael)
+-bug fixes
