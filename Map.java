@@ -27,28 +27,26 @@ public class Map extends JPanel {
     private final Color[][] terrainGrid;
     private final JButton XD= new JButton("Draw Card");
     private final JButton XA= new JButton("Shuffle Deck");
-    private final JButton XC= new JButton("Button3");
+    private final JButton XC= new JButton("TileCoordinates");
     private  JLabel Tina = new JLabel("Tina is a person");
 
     private static Deck gamedeck ;
+    private static Track gametrack ;
 
     //methods
 
     public Map(){
+
         this.terrainGrid = new Color[NR][NC];
-        int dd =0;
 
         for (int i = 0; i < NR; i++) {
             for (int j = 0; j < NC; j++) {
 		if(i%2 ==1 && j != 9 ){
 		    if(( i==3 || i==7)&& j==0){
-			terrainGrid[i][j]=TERRAIN[dd];
-			if (dd != 3){
-			    dd++;
-			}
-			else{
-			    dd =0;
-			}
+			terrainGrid[i][j] = temp.getColor() ;
+			temp.setXcor(i) ;
+			temp.setYcor(j) ;
+			temp = temp.getNext() ;
 		    }
 		    
 		    else{
@@ -58,25 +56,14 @@ public class Map extends JPanel {
 		    this.terrainGrid[i][j]= Color.PINK;
 		}
 		else{
-		    if(dd== 0){
-			this.terrainGrid[i][j] = Red;
-			dd++;
-		    }
-		    else if(dd==1){
-			this.terrainGrid[i][j]= Yellow;
-			dd++;
-		    }
-		    else if(dd==2){
-			this.terrainGrid[i][j]= Green;
-			dd++;
-		    }
-		    else{
-			this.terrainGrid[i][j]= Blue;
-			dd=0;
-		    }
+		    this.terrainGrid[i][j] = temp.getColor();
+		    temp.setXcor(i) ;
+		    temp.setYcor(j) ;
+		    temp = temp.getNext() ;
 		}
 	    }
 	}
+
 	Reverse(terrainGrid,2,6);
         int preferredWidth = NC *PIXELS;
         int preferredHeight = NR * PIXELS;
@@ -84,11 +71,13 @@ public class Map extends JPanel {
 	ButtonHandler BH = new ButtonHandler();
 	XD.addActionListener(BH);
 	XA.addActionListener(BH);
+	XC.addActionListener(BH);
 	
 	add(XD);
 	add(XA);
 	add(XC);
 	add(Tina);
+
     }
 
     private class ButtonHandler implements ActionListener{
@@ -115,6 +104,9 @@ public class Map extends JPanel {
 	     if(e.getSource()==XA){
 		gamedeck.shuffle() ;	
 		Tina.setText("Game deck was shuffled!") ;
+	     }
+	     if(e.getSource()==XC){
+
 	     }
 	}
     }
@@ -169,15 +161,21 @@ public class Map extends JPanel {
        
         /*SwingUtilities.invokeLater(new Runnable() {
 	  public void run() {*/
+
+		//initialize game components
 		gamedeck = new Deck() ;
    		gamedeck.create();
     		gamedeck.shuffle() ;
+		gametrack = new Track(54);
+
+		//initialize map components
                 JFrame frame = new JFrame("Game");
                 Map map = new Map();
                 frame.add(map);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 frame.setSize(700,700);
                 frame.setVisible(true);
+
     }
            
 }

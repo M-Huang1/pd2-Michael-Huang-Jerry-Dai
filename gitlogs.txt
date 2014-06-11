@@ -47,6 +47,6 @@ in-class
 
 home
 -first combining of GUI and files:
-	- added Deck + button features to GUI (Jerry)
+	- added Deck and Track + button features to GUI (Jerry)
 
 

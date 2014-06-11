@@ -25,7 +25,7 @@ public class Track{
     {
 	this.length = length ;
 	//start line is white
-	start = new Tile(Color.WHITE, 0, 0, 1);
+	start = new Tile(Color.WHITE, 0, 0, 0);
 	
 	//track creation
 	Tile temp = start ;
@@ -44,17 +44,7 @@ public class Track{
 		else if(colorcount == 3)
 		    c = Color.BLUE ;
 
-		//add next tile to the track
-		//-randomize tile coordinates (always within +-1 range of each other)
-		int ycoor = temp.getYcor() ;
-		Random rand = new Random() ;
-		int r = temp.getYcor() + rand.nextInt(3)-1 ;
-		if(r==length)
-		    r--;
-		if(r<0)
-		    r++;
-		
-		temp.setNext(new Tile(c, count+1, count+1, r )) ;
+		temp.setNext(new Tile(c, count+1, count+1, 0 )) ;
 		temp = temp.getNext() ;
 
 		//reset color cycle
