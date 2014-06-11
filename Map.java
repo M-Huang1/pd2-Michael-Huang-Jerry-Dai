@@ -23,30 +23,35 @@ public class Map extends JPanel {
     public static final int NC = 10;
 
     public static final int PIXELS = 200;
-
+    private Player pl1,pl2,pl3,pl4;
     private final Color[][] terrainGrid;
     private final JButton XD= new JButton("Draw Card");
     private final JButton XA= new JButton("Shuffle Deck");
     private final JButton XC= new JButton("TileCoordinates");
     private  JLabel Tina = new JLabel("Tina is a person");
 
-    private static Deck gamedeck ;
-    private static Track gametrack ;
-
-    //methods
+    private static Deck gamedeck = new Deck();
+    private static Track gametrack = new Track(54);
+    private static Tile temp= gametrack.getStart();
+    
+    //methods2
 
     public Map(){
 
         this.terrainGrid = new Color[NR][NC];
+	int rectWidth = 66;
+        int rectHeight = 66;
+	
 
         for (int i = 0; i < NR; i++) {
             for (int j = 0; j < NC; j++) {
 		if(i%2 ==1 && j != 9 ){
 		    if(( i==3 || i==7)&& j==0){
 			terrainGrid[i][j] = temp.getColor() ;
-			temp.setXcor(i) ;
-			temp.setYcor(j) ;
+			temp.setXcor(i * rectWidth);
+			temp.setYcor(j* rectHeight);
 			temp = temp.getNext() ;
+			
 		    }
 		    
 		    else{
@@ -57,13 +62,16 @@ public class Map extends JPanel {
 		}
 		else{
 		    this.terrainGrid[i][j] = temp.getColor();
-		    temp.setXcor(i) ;
-		    temp.setYcor(j) ;
+		    temp.setXcor(i * rectWidth);
+		    temp.setYcor(j* rectHeight);
 		    temp = temp.getNext() ;
 		}
 	    }
+	    
 	}
 
+	
+	    
 	Reverse(terrainGrid,2,6);
         int preferredWidth = NC *PIXELS;
         int preferredHeight = NR * PIXELS;
@@ -72,7 +80,8 @@ public class Map extends JPanel {
 	XD.addActionListener(BH);
 	XA.addActionListener(BH);
 	XC.addActionListener(BH);
-	
+	pl1 = new Player("Bob",1,Color.RED,gametrack.getStart(),gametrack);
+	pl1.setShape(new Ellipse2D.Double(0,0,20,20));
 	add(XD);
 	add(XA);
 	add(XC);
@@ -90,23 +99,28 @@ public class Map extends JPanel {
 		
 		if (current.getColor().equals(Color.RED)){
 		    Tina.setText(txt + "RED " + current.getMovement());
+		    goToColor(pl1,Color.RED);
 		}
 		else if(current.getColor().equals(Color.YELLOW)){
 		    Tina.setText(txt + "YELLOW " + current.getMovement());
+		    goToColor(pl1,Color.YELLOW);
 		}
 		else if(current.getColor().equals(Color.GREEN)){
 		    Tina.setText(txt + "GREEN " + current.getMovement());
+		    goToColor(pl1,Color.GREEN);
 		}
 		else if(current.getColor().equals(Color.BLUE)){
 		    Tina.setText(txt + "BLUE " + current.getMovement());
+		    goToColor(pl1,Color.BLUE);
 		}
+		repaint();
              }
 	     if(e.getSource()==XA){
 		gamedeck.shuffle() ;	
 		Tina.setText("Game deck was shuffled!") ;
 	     }
 	     if(e.getSource()==XC){
-
+		 
 	     }
 	}
     }
@@ -118,7 +132,7 @@ public class Map extends JPanel {
    
         g.clearRect(0, 0, getWidth(), getHeight());
    
-        int rectWidth = getWidth() / NC;
+        int rectWidth = getWidth()/ NC;
         int rectHeight = getHeight() / NR;
 	
         for (int i = 0; i < NR; i++) {
@@ -126,17 +140,21 @@ public class Map extends JPanel {
                
                 int x = i * rectWidth;
                 int y = j * rectHeight;
+		
+		
                 Color terrainColor = terrainGrid[i][j];
                 g.setColor(terrainColor);
                 g.fillRect(x, y, rectWidth, rectHeight);
             }
         }
+	
 	Ellipse2D p = new Ellipse2D.Double(0,0,20,20);
 	Ellipse2D p1 = new Ellipse2D.Double(0,40,20,20);
 	Ellipse2D p2 = new Ellipse2D.Double(40,0,20,20);
 	Ellipse2D p3 = new Ellipse2D.Double(40,40,20,20);
 	Graphics2D g2 = (Graphics2D)g;
-	g2.fill(p);
+	
+	g2.fill(pl1.getShape());
 	g2.fill(p1);
 	g2.fill(p2);
 	g2.fill(p3);
@@ -155,7 +173,16 @@ public class Map extends JPanel {
 	}
 	
     }
+    public void goToColor(Player p,Color c){
+	Tile pTemp = p.getTile().getNext();
+	while(!pTemp.getColor().equals(c)){
+	    pTemp = pTemp.getNext();
+	}
+	p.setTile(pTemp);
 	
+	p.setShape(new Ellipse2D.Double(pTemp.getXcor(),pTemp.getYcor(),20,20));
+    }
+	    
 
     public static void main(String[] args) {
        
