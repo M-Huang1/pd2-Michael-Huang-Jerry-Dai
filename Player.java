@@ -116,4 +116,60 @@ public class Player{
 	return shape ;
     }
 
+    //player movement based on card drawn
+    public void move(Card c){
+
+	int mv = c.getMovement() ;
+	Tile pTemp = getTile().getNext(); ;
+
+	//forward movement
+	if(mv > 0)
+	    {
+		while(mv > 0)
+		    {
+			try
+			{
+	    		    while(!pTemp.getColor().equals(c.getColor()))
+				{
+	   			    pTemp = pTemp.getNext();
+	    			}
+			}
+			//exception means the player has reached the end of the track, has won
+			catch(Exception e)
+			{
+	    		    pTemp= track.getEnd();  
+	    		    setShape(new Ellipse2D.Double(620,620,20,20));	    
+			}
+			//this allows movement to loop if a card with movement 2 is drawn
+			if(mv > 1)
+			    {
+			    	pTemp = pTemp.getNext() ;
+			    }
+			mv-- ;
+		    }
+	    }
+	//backward movement
+	else
+	    {
+		pTemp = track.getStart() ;
+
+		if(!(getTile().getOrder()-4 < 0)
+		   && (Tile.getOrder()-4 == 0) )
+		    {
+			while(pTemp.getOrder() != getTile().getOrder()-4)
+		    	    {
+				pTemp = pTemp.getNext() ;
+		    	    }
+			while( pTemp.getColor() != c.getColor() )
+			    {
+				pTemp = pTemp.getNext() ;
+			    }
+	    	    }
+	    }
+
+	setShape(new Ellipse2D.Double(pTemp.getXcor(),pTemp.getYcor(),20,20));
+	setTile(pTemp);
+	
+    }
+
 }

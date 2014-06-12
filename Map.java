@@ -118,19 +118,19 @@ public class Map extends JPanel {
 		
 		if (current.getColor().equals(Color.RED)){
 		    Tina.setText(txt + "RED " + current.getMovement());
-		    goToColor(pl1,current);
+		    pl1.move(current);
 		}
 		else if(current.getColor().equals(Color.YELLOW)){
 		    Tina.setText(txt + "YELLOW " + current.getMovement());
-		    goToColor(pl1,current);
+		    pl1.move(current);
 		}
 		else if(current.getColor().equals(Color.GREEN)){
 		    Tina.setText(txt + "GREEN " + current.getMovement());
-		    goToColor(pl1,current);
+		    pl1.move(current);
 		}
 		else if(current.getColor().equals(Color.BLUE)){
 		    Tina.setText(txt + "BLUE " + current.getMovement());
-		    goToColor(pl1,current);
+		    pl1.move(current);
 		}
 		repaint();
              }
@@ -198,59 +198,5 @@ public class Map extends JPanel {
 	}
 	
     }
-	
-    //player movement based on card drawn
-    public void goToColor(Player p, Card c){
 
-	int move = c.getMovement() ;
-	Tile pTemp = p.getTile().getNext(); ;
-
-	//forward movement
-	if(move > 0)
-	    {
-		while(move > 0)
-		    {
-			try
-			{
-	    		    while(!pTemp.getColor().equals(c.getColor()))
-				{
-	   			    pTemp = pTemp.getNext();
-	    			}
-			}
-			//exception means the player has reached the end of the track, has won
-			catch(Exception e)
-			{
-	    		    pTemp= gametrack.getEnd();  
-	    		    p.setShape(new Ellipse2D.Double(620,620,20,20));	    
-			}
-			//this allows movement to loop if a card with movement 2 is drawn
-			if(move > 1)
-			    {
-			    	pTemp = pTemp.getNext() ;
-			    }
-			move-- ;
-		    }
-	    }
-	//backward movement
-	else
-	    {
-		pTemp = gametrack.getStart() ;
-		if(!(p.getTile().getOrder()-4 < 0))
-		    {
-			while(pTemp.getOrder() != p.getTile().getOrder()-4)
-		    	    {
-				pTemp = pTemp.getNext() ;
-		    	    }
-			while( pTemp.getColor() != c.getColor() )
-			    {
-				pTemp = pTemp.getNext() ;
-			    }
-	    	    }Tile temp = gametrack.getStart();
-	    }
-
-	p.setShape(new Ellipse2D.Double(pTemp.getXcor(),pTemp.getYcor(),20,20));
-	p.setTile(pTemp);
-	
-    }
-           
 }
