@@ -116,7 +116,7 @@ public class Player{
 	return shape ;
     }
 
-    //player movement based on card drawn
+    //player movement based on card drawn, animation
     public void move(Card c){
 
 	int mv = c.getMovement() ;
@@ -132,18 +132,20 @@ public class Player{
 	    		    while(!pTemp.getColor().equals(c.getColor()))
 				{
 	   			    pTemp = pTemp.getNext();
+				    update(pTemp) ;
 	    			}
 			}
 			//exception means the player has reached the end of the track, has won
 			catch(Exception e)
 			{
 	    		    pTemp= track.getEnd();  
-	    		    setShape(new Ellipse2D.Double(620,620,20,20));	    
+	    		    update(pTemp) ;	    
 			}
 			//this allows movement to loop if a card with movement 2 is drawn
 			if(mv > 1)
 			    {
 			    	pTemp = pTemp.getNext() ;
+				update(pTemp) ;
 			    }
 			mv-- ;
 		    }
@@ -154,22 +156,40 @@ public class Player{
 		pTemp = track.getStart() ;
 
 		if(!(getTile().getOrder()-4 < 0)
-		   && (Tile.getOrder()-4 == 0) )
+		   && (!(pTemp.getOrder()-4 == 0)) )
 		    {
 			while(pTemp.getOrder() != getTile().getOrder()-4)
 		    	    {
 				pTemp = pTemp.getNext() ;
+				update(pTemp) ;
 		    	    }
 			while( pTemp.getColor() != c.getColor() )
 			    {
 				pTemp = pTemp.getNext() ;
+				update(pTemp) ;
 			    }
 	    	    }
 	    }
 
-	setShape(new Ellipse2D.Double(pTemp.getXcor(),pTemp.getYcor(),20,20));
-	setTile(pTemp);
-	
+    }
+
+    //update position on map
+    public void update(Tile temp)
+    {
+	setShape(new Ellipse2D.Double(temp.getXcor(),temp.getYcor(),20,20));
+	setTile(temp);
+	repaint();
+	wait(500);
+    }
+
+    //wait function
+    public void wait(int time)
+    {
+	try {
+	    Thread.sleep(time);
+	} catch(InterruptedException ex) {
+	    Thread.currentThread().interrupt();
+	}
     }
 
 }
