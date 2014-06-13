@@ -154,7 +154,7 @@ public class Player{
 		pTemp = track.getStart() ;
 
 		if(!(getTile().getOrder()-4 < 0)
-		   && (Tile.getOrder()-4 == 0) )
+		   && (!(pTemp.getOrder()-4 == 0)) )
 		    {
 			while(pTemp.getOrder() != getTile().getOrder()-4)
 		    	    {

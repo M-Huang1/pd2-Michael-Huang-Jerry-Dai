@@ -98,19 +98,22 @@ public class Map extends JPanel {
 	//create players
 	pl1 = new Player("Bob",1,Color.RED,gametrack.getStart(),gametrack);
 	pl1.setShape(new Ellipse2D.Double(0,0,20,20));
-
+	pl2 = new Player("Tina",2,Color.BLUE,gametrack.getStart(),gametrack);
+	pl2.setShape(new Ellipse2D.Double(40,0,20,20));
+	
 	//add objects to the map
 	add(XD);
 	add(XA);
 	add(XC);
 	add(Tina);
+	
 
     }
 
     //this class controls user-button interaction
     private class ButtonHandler implements ActionListener{
 	int count = 0;
-
+	int pCount =0;
 	public void actionPerformed(ActionEvent e){
 	    if(e.getSource()==XD){
 		Card current = gamedeck.draw() ;
@@ -118,19 +121,48 @@ public class Map extends JPanel {
 		
 		if (current.getColor().equals(Color.RED)){
 		    Tina.setText(txt + "RED " + current.getMovement());
+		    if(pCount ==0){
 		    pl1.move(current);
+		    pCount++;
+		    }
+		    else if(pCount ==1){
+			pl2.move(current);
+			pCount=0;
+		    }
 		}
 		else if(current.getColor().equals(Color.YELLOW)){
 		    Tina.setText(txt + "YELLOW " + current.getMovement());
+		    if(pCount ==0){
 		    pl1.move(current);
+		    pCount++;
+		    }
+		    else if(pCount ==1){
+			pl2.move(current);
+			pCount=0;
+		    }
+		   
 		}
 		else if(current.getColor().equals(Color.GREEN)){
 		    Tina.setText(txt + "GREEN " + current.getMovement());
+		    if(pCount ==0){
 		    pl1.move(current);
+		    pCount++;
+		    }
+		    else if(pCount ==1){
+			pl2.move(current);
+			pCount=0;
+		    }
 		}
 		else if(current.getColor().equals(Color.BLUE)){
 		    Tina.setText(txt + "BLUE " + current.getMovement());
+		    if(pCount ==0){
 		    pl1.move(current);
+		    pCount++;
+		    }
+		    else if(pCount ==1){
+			pl2.move(current);
+			pCount=0;
+		    }
 		}
 		repaint();
              }
@@ -168,7 +200,8 @@ public class Map extends JPanel {
                 g.fillRect(x, y, rectWidth, rectHeight);
             }
         }
-	
+	/*ImageIcon image = new ImageIcon(getClass().getResource("Mint.jpg"));
+	  image.paintIcon(this,g,0,0);*/
 	Ellipse2D p = new Ellipse2D.Double(0,0,20,20);
 	Ellipse2D p1 = new Ellipse2D.Double(0,40,20,20);
 	Ellipse2D p2 = new Ellipse2D.Double(40,0,20,20);
@@ -176,8 +209,8 @@ public class Map extends JPanel {
 	Graphics2D g2 = (Graphics2D)g;
 	g2.setPaint(Color.ORANGE);
 	g2.fill(pl1.getShape());
+	g2.fill(pl2.getShape());
 	g2.fill(p1);
-	g2.fill(p2);
 	g2.fill(p3);
 
     }
