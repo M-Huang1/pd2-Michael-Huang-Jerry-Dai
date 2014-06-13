@@ -35,7 +35,7 @@ public class Map extends JPanel {
 
     private static Deck gamedeck ;
     private static Track gametrack ;
-    
+    private ImageIcon image = new ImageIcon(getClass().getResource("Mint.jpg"));
     //constructor
     //creates grid, translates Deck (Stack) onto GUI (represented by colored Tiles)
     //creates buttons, etc.
@@ -103,7 +103,7 @@ public class Map extends JPanel {
 
 	//create players
 	pl1 = new Player("Bob",1,Color.RED,gametrack.getStart(),gametrack);
-	pl1.setShape(new Ellipse2D.Double(0,0,20,20));
+	pl1.setPic(image);
 	pl2 = new Player("Tina",2,Color.BLUE,gametrack.getStart(),gametrack);
 	pl2.setShape(new Ellipse2D.Double(40,0,20,20));
 	
@@ -206,15 +206,15 @@ public class Map extends JPanel {
                 g.fillRect(x, y, rectWidth, rectHeight);
             }
         }
-	/*ImageIcon image = new ImageIcon(getClass().getResource("Mint.jpg"));
-	  image.paintIcon(this,g,0,0);*/
+	
+	  image.paintIcon(this,g,0,0);
 	Ellipse2D p = new Ellipse2D.Double(0,0,20,20);
 	Ellipse2D p1 = new Ellipse2D.Double(0,40,20,20);
 	Ellipse2D p2 = new Ellipse2D.Double(40,0,20,20);
 	Ellipse2D p3 = new Ellipse2D.Double(40,40,20,20);
 	Graphics2D g2 = (Graphics2D)g;
 	g2.setPaint(Color.ORANGE);
-	g2.fill(pl1.getShape());
+	pl1.getIcon().paintIcon(this,g,pl1.getXCor(),pl1.getYCor());
 	g2.fill(pl2.getShape());
 	g2.fill(p1);
 	g2.fill(p3);

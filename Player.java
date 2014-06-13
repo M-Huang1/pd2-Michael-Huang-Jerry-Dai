@@ -4,6 +4,7 @@ import java.util.* ;
 import java.io.*  ;
 import java.awt.Color ;
 import java.awt.geom.*;
+import javax.swing.*;
 
 public class Player{
 
@@ -16,7 +17,8 @@ public class Player{
     private Tile loc ;
     private Track track ;
     private Ellipse2D shape;
-
+    private ImageIcon icon;
+    
     //constructors
 
     public Player()
@@ -110,12 +112,18 @@ public class Player{
     {
 	this.shape = shape ;
     }
-
+    
     public Ellipse2D getShape()
     {
 	return shape ;
     }
-
+    public void setPic(ImageIcon image){
+	icon = image;
+    }
+    public ImageIcon getIcon(){
+	return icon;
+    }
+	
     //player movement based on card drawn, animation
     public void move(Card c){
 
@@ -172,13 +180,19 @@ public class Player{
 	    }
 
     }
+    public int getXCor(){
+	return loc.getXcor();
+    }
+    public int getYCor(){
+	return loc.getYcor();
+    }
 
     //update position on map
     public void update(Tile temp)
     {
 	setShape(new Ellipse2D.Double(temp.getXcor(),temp.getYcor(),20,20));
 	setTile(temp);
-	repaint();
+	//repaint();
 	wait(500);
     }
 
