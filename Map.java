@@ -27,13 +27,14 @@ public class Map extends JPanel {
     public static final int PIXELS = 200;
     private Player pl1,pl2,pl3,pl4;
     private final Color[][] terrainGrid;
-    private final JButton XD= new JButton("Draw Card");
-    private final JButton XA= new JButton("Shuffle Deck");
-    private final JButton XC= new JButton("TileCoordinates");
-    private  JLabel Tina = new JLabel("Tina is a person");
+    private final JButton XD ;
+    private final JButton XA ;
+    private final JButton XC ;
+    private  JLabel Tina ;
+    private ButtonHandler BH ;
 
-    private static Deck gamedeck = new Deck();
-    private static Track gametrack = new Track(54);
+    private static Deck gamedeck ;
+    private static Track gametrack ;
     
     //constructor
     //creates grid, translates Deck (Stack) onto GUI (represented by colored Tiles)
@@ -44,6 +45,12 @@ public class Map extends JPanel {
 	this.gamedeck = gamedeck ;
 	this.gametrack = gametrack ;
         this.terrainGrid = new Color[NR][NC];
+
+	XD= new JButton("Draw Card");
+	XA= new JButton("Shuffle Deck");
+	XC= new JButton("TileCoordinates");
+	Tina = new JLabel("Tina is a person");
+	BH = new ButtonHandler();
 
 	int rectWidth = 70;
         int rectHeight = 70;
@@ -90,7 +97,6 @@ public class Map extends JPanel {
         setPreferredSize(new Dimension(preferredWidth, preferredHeight));
 
 	//give buttons functionality
-	ButtonHandler BH = new ButtonHandler();
 	XD.addActionListener(BH);
 	XA.addActionListener(BH);
 	XC.addActionListener(BH);
