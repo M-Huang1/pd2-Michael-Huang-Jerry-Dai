@@ -140,20 +140,20 @@ public class Player{
 	    		    while(!pTemp.getColor().equals(c.getColor()))
 				{
 	   			    pTemp = pTemp.getNext();
-				    update(pTemp) ;
+				 
 	    			}
 			}
 			//exception means the player has reached the end of the track, has won
 			catch(Exception e)
 			{
 	    		    pTemp= track.getEnd();  
-	    		    update(pTemp) ;	    
+	    		    
 			}
 			//this allows movement to loop if a card with movement 2 is drawn
 			if(mv > 1)
 			    {
 			    	pTemp = pTemp.getNext() ;
-				update(pTemp) ;
+			
 			    }
 			mv-- ;
 		    }
@@ -169,16 +169,17 @@ public class Player{
 			while(pTemp.getOrder() != getTile().getOrder()-4)
 		    	    {
 				pTemp = pTemp.getNext() ;
-				update(pTemp) ;
+				
 		    	    }
 			while( pTemp.getColor() != c.getColor() )
 			    {
 				pTemp = pTemp.getNext() ;
-				update(pTemp) ;
+				
 			    }
 	    	    }
 	    }
-
+       
+	update(pTemp);
     }
     public int getXCor(){
 	return loc.getXcor();
@@ -193,7 +194,11 @@ public class Player{
 	setShape(new Ellipse2D.Double(temp.getXcor(),temp.getYcor(),20,20));
 	setTile(temp);
 	//repaint();
+<<<<<<< HEAD
 	wait(500);
+=======
+	//wait(500);
+>>>>>>> 7de851144046793f2b3155b3fb4aa862de7d35dc
     }
 
     //wait function

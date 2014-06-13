@@ -57,3 +57,11 @@ in-class
 home
 -added backward movement, cleaned up code (Jerry)
 	-**moved main method to new Game.java class, now this is main executable file
+
+6/12/14
+-x
+
+6/13/14
+in-class
+-two player movement (Michael)
+-began giving avatars for the characters

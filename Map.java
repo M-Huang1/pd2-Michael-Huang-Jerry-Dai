@@ -170,7 +170,9 @@ public class Map extends JPanel {
 			pCount=0;
 		    }
 		}
+
 		repaint();
+
              }
 	     if(e.getSource()==XA){
 		gamedeck.shuffle() ;	
