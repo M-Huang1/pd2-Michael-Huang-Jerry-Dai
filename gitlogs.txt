@@ -64,3 +64,4 @@ home
 6/13/14
 in-class
 -two player movement (Michael)
+-began giving avatars for the characters
