@@ -194,11 +194,11 @@ public class Player{
 	setShape(new Ellipse2D.Double(temp.getXcor(),temp.getYcor(),20,20));
 	setTile(temp);
 	//repaint();
-<<<<<<< HEAD
+	//<<<<<<< HEAD
 	wait(500);
-=======
+	//=======
 	//wait(500);
->>>>>>> 7de851144046793f2b3155b3fb4aa862de7d35dc
+	//>>>>>>> 7de851144046793f2b3155b3fb4aa862de7d35dc
     }
 
     //wait function

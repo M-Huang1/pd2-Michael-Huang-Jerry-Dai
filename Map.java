@@ -35,7 +35,11 @@ public class Map extends JPanel {
 
     private static Deck gamedeck ;
     private static Track gametrack ;
-    private ImageIcon image = new ImageIcon(getClass().getResource("Mint.jpg"));
+    private ImageIcon image = new ImageIcon(getClass().getResource("mint.jpg"));
+    private ImageIcon image1 = new ImageIcon(getClass().getResource("Gloppy.jpg"));
+    private ImageIcon image2 = new ImageIcon(getClass().getResource("Lord_Licorice.jpg"));
+    private ImageIcon image3 = new ImageIcon(getClass().getResource("Lolly.png"));
+    
     //constructor
     //creates grid, translates Deck (Stack) onto GUI (represented by colored Tiles)
     //creates buttons, etc.
@@ -102,12 +106,16 @@ public class Map extends JPanel {
 	XC.addActionListener(BH);
 
 	//create players
-	pl1 = new Player("Bob",1,Color.RED,gametrack.getStart(),gametrack);
+	pl1 = new Player("Mr.Mint",1,Color.RED,gametrack.getStart(),gametrack);
 	pl1.setPic(image);
-	pl2 = new Player("Tina",2,Color.BLUE,gametrack.getStart(),gametrack);
-	pl2.setShape(new Ellipse2D.Double(40,0,20,20));
-	
-	//add objects to the map
+	pl2 = new Player("Gloppy",2,Color.BLUE,gametrack.getStart(),gametrack);
+	pl2.setPic(image1);
+
+	pl3 = new Player("Lord Licorice",3,Color.BLUE,gametrack.getStart(),gametrack);
+	pl3.setPic(image2);
+	pl4 = new Player("Lolly",4,Color.BLUE,gametrack.getStart(),gametrack);
+	pl4.setPic(image3);
+		//add objects to the map
 	add(XD);
 	add(XA);
 	add(XC);
@@ -133,7 +141,15 @@ public class Map extends JPanel {
 		    }
 		    else if(pCount ==1){
 			pl2.move(current);
-			pCount=0;
+			pCount++;
+		    }
+		    else if(pCount ==2){
+			pl3.move(current);
+			pCount++;
+		    }
+		    else {
+			pl4.move(current);
+			pCount =0;
 		    }
 		}
 		else if(current.getColor().equals(Color.YELLOW)){
@@ -144,8 +160,17 @@ public class Map extends JPanel {
 		    }
 		    else if(pCount ==1){
 			pl2.move(current);
-			pCount=0;
+			pCount++;
 		    }
+		    else if(pCount ==2){
+			pl3.move(current);
+			pCount++;
+		    }
+		    else {
+			pl4.move(current);
+			pCount =0;
+		    }
+		   
 		   
 		}
 		else if(current.getColor().equals(Color.GREEN)){
@@ -156,8 +181,17 @@ public class Map extends JPanel {
 		    }
 		    else if(pCount ==1){
 			pl2.move(current);
-			pCount=0;
+			pCount++;
 		    }
+		    else if(pCount ==2){
+			pl3.move(current);
+			pCount++;
+		    }
+		    else {
+			pl4.move(current);
+			pCount =0;
+		    }
+		    
 		}
 		else if(current.getColor().equals(Color.BLUE)){
 		    Tina.setText(txt + "BLUE " + current.getMovement());
@@ -167,8 +201,17 @@ public class Map extends JPanel {
 		    }
 		    else if(pCount ==1){
 			pl2.move(current);
-			pCount=0;
+			pCount++;
 		    }
+		    else if(pCount ==2){
+			pl3.move(current);
+			pCount++;
+		    }
+		    else {
+			pl4.move(current);
+			pCount =0;
+		    }
+		    
 		}
 
 		repaint();
@@ -194,8 +237,8 @@ public class Map extends JPanel {
    
         g.clearRect(0, 0, getWidth(), getHeight());
    
-        int rectWidth = getWidth()/ NC;
-        int rectHeight = getHeight() / NR;
+        int rectWidth = 700/ NC;
+        int rectHeight = 700 / NR;
 	
         for (int i = 0; i < NR; i++) {
             for (int j = 0; j < NC; j++) {
@@ -209,17 +252,20 @@ public class Map extends JPanel {
             }
         }
 	
-	  image.paintIcon(this,g,0,0);
-	Ellipse2D p = new Ellipse2D.Double(0,0,20,20);
+
+	/*Ellipse2D p = new Ellipse2D.Double(0,0,20,20);
 	Ellipse2D p1 = new Ellipse2D.Double(0,40,20,20);
 	Ellipse2D p2 = new Ellipse2D.Double(40,0,20,20);
-	Ellipse2D p3 = new Ellipse2D.Double(40,40,20,20);
+	Ellipse2D p3 = new Ellipse2D.Double(40,40,20,20);*/
 	Graphics2D g2 = (Graphics2D)g;
-	g2.setPaint(Color.ORANGE);
+	//g2.setPaint(Color.ORANGE);
 	pl1.getIcon().paintIcon(this,g,pl1.getXCor(),pl1.getYCor());
-	g2.fill(pl2.getShape());
-	g2.fill(p1);
-	g2.fill(p3);
+	pl2.getIcon().paintIcon(this,g,pl2.getXCor()+40,pl2.getYCor());
+	pl3.getIcon().paintIcon(this,g,pl3.getXCor(),pl3.getYCor()+40);
+	pl4.getIcon().paintIcon(this,g,pl4.getXCor()+40,pl4.getYCor()+40);
+	
+	
+	
 
     }
 
