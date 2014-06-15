@@ -181,12 +181,6 @@ public class Player{
        
 	update(pTemp);
     }
-    public int getXCor(){
-	return loc.getXcor();
-    }
-    public int getYCor(){
-	return loc.getYcor();
-    }
 
     //update position on map
     public void update(Tile temp)
@@ -195,7 +189,7 @@ public class Player{
 	setTile(temp);
 	//repaint();
 	//<<<<<<< HEAD
-	wait(500);
+	//wait(500);
 	//=======
 	//wait(500);
 	//>>>>>>> 7de851144046793f2b3155b3fb4aa862de7d35dc
