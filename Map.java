@@ -126,104 +126,81 @@ public class Map extends JPanel {
 
     //this class controls user-button interaction
     private class ButtonHandler implements ActionListener{
+
 	int count = 0;
 	int pCount =0;
+
 	public void actionPerformed(ActionEvent e){
+
+	    //button 2
 	    if(e.getSource()==XD){
+
 		Card current = gamedeck.draw() ;
 		String txt = "Color drawn: " ;
-		
-		if (current.getColor().equals(Color.RED)){
-		    Tina.setText(txt + "RED " + current.getMovement());
-		    if(pCount ==0){
+		String col = "" ;
+		String nm = "" ;
+		String mv = "" ;
+		int m = current.getMovement() ;
+
+		//color string text
+		if (current.getColor().equals(Color.RED))
+		    col = "RED" ;
+		else if (current.getColor().equals(Color.YELLOW))
+		    col = "YELLOW" ;
+		else if (current.getColor().equals(Color.GREEN))
+		    col = "GREEN" ;
+		else 
+		    col = "BLUE" ;
+
+		//movement string text
+		if (m == 1)
+		    mv = "one space forward!" ;
+		else if (m == 2)
+		    mv = "two spaces forward!" ;
+		else
+		    mv = "one space backward!" ;
+
+		//order of players
+		if(pCount == 0)
+		{
 		    pl1.move(current);
+		    nm = pl1.getName() ;
 		    pCount++;
-		    }
-		    else if(pCount ==1){
-			pl2.move(current);
-			pCount++;
-		    }
-		    else if(pCount ==2){
-			pl3.move(current);
-			pCount++;
-		    }
-		    else {
-			pl4.move(current);
-			pCount =0;
-		    }
 		}
-		else if(current.getColor().equals(Color.YELLOW)){
-		    Tina.setText(txt + "YELLOW " + current.getMovement());
-		    if(pCount ==0){
-		    pl1.move(current);
+		else if(pCount ==1)
+		{
+		    pl2.move(current);
+		    nm = pl2.getName() ;
 		    pCount++;
-		    }
-		    else if(pCount ==1){
-			pl2.move(current);
-			pCount++;
-		    }
-		    else if(pCount ==2){
-			pl3.move(current);
-			pCount++;
-		    }
-		    else {
-			pl4.move(current);
-			pCount =0;
-		    }
-		   
-		   
 		}
-		else if(current.getColor().equals(Color.GREEN)){
-		    Tina.setText(txt + "GREEN " + current.getMovement());
-		    if(pCount ==0){
-		    pl1.move(current);
+		else if(pCount ==2)
+		{
+		    pl3.move(current);
+		    nm = pl3.getName() ;
 		    pCount++;
-		    }
-		    else if(pCount ==1){
-			pl2.move(current);
-			pCount++;
-		    }
-		    else if(pCount ==2){
-			pl3.move(current);
-			pCount++;
-		    }
-		    else {
-			pl4.move(current);
-			pCount =0;
-		    }
-		    
 		}
-		else if(current.getColor().equals(Color.BLUE)){
-		    Tina.setText(txt + "BLUE " + current.getMovement());
-		    if(pCount ==0){
-		    pl1.move(current);
-		    pCount++;
-		    }
-		    else if(pCount ==1){
-			pl2.move(current);
-			pCount++;
-		    }
-		    else if(pCount ==2){
-			pl3.move(current);
-			pCount++;
-		    }
-		    else {
-			pl4.move(current);
-			pCount =0;
-		    }
-		    
+		else 
+		{
+		    pl4.move(current);
+		    nm = pl4.getName() ;
+		    pCount =0;
 		}
 
-		repaint();
+		//update GUI
+		Tina.setText(nm + " drew a " + col + " card and moves " + mv ) ;
+		repaint() ;
+	    }
 
-             }
-	     if(e.getSource()==XA){
+	    //button 2
+	    if(e.getSource()==XA){
 		gamedeck.shuffle() ;	
 		Tina.setText("Game deck was shuffled!") ;
-	     }
-	     if(e.getSource()==XC){
+	    }
+
+	    //button 3
+	    if(e.getSource()==XC){
 		 
-	     }
+	    }
 	}
     }
 

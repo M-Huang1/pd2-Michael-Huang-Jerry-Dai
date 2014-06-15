@@ -65,3 +65,9 @@ home
 in-class
 -two player movement (Michael)
 -began giving avatars for the characters
+
+6/14/14
+home
+-4 player movement (Michael)
+-gave characters avatars
+-button changes (Jerry)
