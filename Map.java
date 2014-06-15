@@ -25,6 +25,8 @@ public class Map extends JPanel {
     public static final int NR = 10;
     public static final int NC = 10;
 
+    public int drawn ;
+
     public static final int PIXELS = 200;
     private Player pl1,pl2,pl3,pl4;
     private ArrayList<Player> players ;
@@ -32,7 +34,7 @@ public class Map extends JPanel {
     private final JButton XD ;
     private final JButton XA ;
     private final JButton XC ;
-    private  JLabel Tina ;
+    private JLabel Tina, counter ;
     private ButtonHandler BH ;
 
     private static Deck gamedeck ;
@@ -48,15 +50,13 @@ public class Map extends JPanel {
 
     public Map(Deck gamedeck, Track gametrack){
 	
+	drawn = 0 ;
+	
 	this.gamedeck = gamedeck ;
 	this.gametrack = gametrack ;
         this.terrainGrid = new Color[NR][NC];
 
-	XD= new JButton("Draw Card");
-	XA= new JButton("Shuffle Deck");
-	XC= new JButton("TileCoordinates");
-	Tina = new JLabel("Tina is a person");
-	BH = new ButtonHandler();
+	// make the grid 
 
 	int rectWidth = 70;
         int rectHeight = 70;
@@ -102,11 +102,6 @@ public class Map extends JPanel {
 
         setPreferredSize(new Dimension(preferredWidth, preferredHeight));
 
-	//give buttons functionality
-	XD.addActionListener(BH);
-	XA.addActionListener(BH);
-	XC.addActionListener(BH);
-
 	//create players
 	pl1 = new Player("Mr.Mint",1,Color.RED,gametrack.getStart(),gametrack);
 	pl1.setPic(image);
@@ -123,13 +118,35 @@ public class Map extends JPanel {
 	players.add(pl3) ;
 	players.add(pl4) ;
 
-	//add objects to the map
+	//create buttons
+	XD= new JButton("Draw Card");
+	XA= new JButton("Shuffle Deck");
+	XC= new JButton("TileCoordinates");
+	Tina = new JLabel("GAME START");
+	counter = new JLabel(pl1.getName() + "'s turn");
+	BH = new ButtonHandler() ;
+
+	//give buttons functionality
+	XD.addActionListener(BH);
+	XA.addActionListener(BH);
+	XC.addActionListener(BH);
+
+	//add objects to the map	
+	setLayout(null);
+	XD.setLocation(725,150);
+	XD.setSize(150,50);
+	XA.setLocation(725,200);
+	XA.setSize(150,50);
+	Tina.setLocation(725,250);
+	Tina.setSize(200,200);
+	counter.setLocation(725,100);
+	counter.setSize(150,50);
 	add(XD);
 	add(XA);
-	add(XC);
+	//add(XC);
 	add(Tina);
+	add(counter);
 	
-
     }
 
     //this class controls user-button interaction
@@ -141,13 +158,11 @@ public class Map extends JPanel {
 	public void actionPerformed(ActionEvent e){
 
 	    //button 1
-	    for(Player p : players){
 	    if(e.getSource()==XD){
-		act(p) ;
+		act(pCount) ;
 		pCount++ ;
 		if(pCount>=4)
 		    pCount = 0 ;
-	    }
 	    }
 
 	    //button 2
@@ -223,12 +238,14 @@ public class Map extends JPanel {
     }
 
     //one player's actions in a round
-    public void act(Player playr)
+    public void act(int pCount)
     {
+		Player next = null ;
 		Card current = gamedeck.draw() ;
+		drawn++ ;
 		String txt = "Color drawn: " ;
 		String col = "" ;
-		String nm = playr.getName() ;
+		String nm = "" ;
 		String mv = "" ;
 		int m = current.getMovement() ;
 
@@ -251,40 +268,65 @@ public class Map extends JPanel {
 		    mv = "one space backward!" ;
 
 		//player move
-		playr.move(current) ;
-		
 
-		/*
+		
 		if(pCount == 0)
 		{
-		    pl1.move(current);
+		    pl1.move(current) ;
 		    nm = pl1.getName() ;
-		    pCount++;
+		    next = pl2 ;
+		    pCount++ ;
 		}
 		else if(pCount ==1)
 		{
-		    pl2.move(current);
+		    pl2.move(current) ;
 		    nm = pl2.getName() ;
-		    pCount++;
+		    next = pl3 ;
+		    pCount++ ;
 		}
 		else if(pCount ==2)
 		{
-		    pl3.move(current);
+		    pl3.move(current ) ;
 		    nm = pl3.getName() ;
-		    pCount++;
+		    next = pl4 ;
+		    pCount++ ;
 		}
 		else 
 		{
-		    pl4.move(current);
+		    pl4.move(current) ;
 		    nm = pl4.getName() ;
-		    pCount =0;
+		    next = pl1 ;
+		    pCount =0 ;
 		}
 
-		*/
+		boolean winner = false ;
 
-		//update GUI
-		Tina.setText(nm + " drew a " + col + " card and moves " + mv ) ;
-		repaint() ;
+		for(Player p : players)
+		    {
+			if(p.getTile().getColor().equals(Color.BLACK))
+			    {
+			    winner = true ;
+			    next = p ;
+			    }
+		    }
+
+		if(!winner)
+		    {
+			//update GUI
+			Tina.setText("<html>" + 
+				nm + " drew a <br> " 
+				+ col + " card <br> and moves <br> " 
+				+ mv + "</html>") ;
+			counter.setText(next.getName() + "'s turn") ;
+			repaint() ;
+		    }
+		else
+		    {
+			Tina.setText("<html>" + next.getName() + " <br> has reached the end! <br>"
+						+ "Game Stats: <br>" + "Total Cards Drawn: <br>" + drawn + "</html>") ;
+			counter.setText("WINNER!!");
+			repaint() ;
+		    }
 
     }
 
