@@ -71,3 +71,14 @@ home
 -4 player movement (Michael)
 -gave characters avatars
 -button changes (Jerry)
+
+6/15/14
+home
+-ending of game (Jerry)
+
+6/16/14
+home (Jerry)
+-created GRAY cards (switch spots with other players)
+-restart game option
+-leaderboard 
+-README.md update

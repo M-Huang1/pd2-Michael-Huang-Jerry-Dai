@@ -11,7 +11,7 @@ public class Deck{
     //-note: LENGTH must be 40
     private Stack stack, tempdeck, bottom ;
     private int length ;
-    private static final int LENGTH = 40 ;
+    private static final int LENGTH = 45 ;
     
     //constructors
     public Deck()
@@ -67,6 +67,11 @@ public class Deck{
 		cards.add(new Card(-1,Color.BLUE)) ;
 		cards.add(new Card(-1,Color.GREEN)) ;
 		cards.add(new Card(-1,Color.YELLOW)) ;
+	    }
+	//creates 5 switch cards
+	for(int x = 0 ; x < 5 ; x++)
+	    {
+		cards.add(new Card(0,Color.GRAY)) ;
 	    }
 	    
 

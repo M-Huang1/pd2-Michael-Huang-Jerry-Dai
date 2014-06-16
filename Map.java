@@ -26,6 +26,7 @@ public class Map extends JPanel {
     public static final int NC = 10;
 
     public int drawn ;
+    public boolean win ;
 
     public static final int PIXELS = 200;
     private Player pl1,pl2,pl3,pl4;
@@ -34,7 +35,7 @@ public class Map extends JPanel {
     private final JButton XD ;
     private final JButton XA ;
     private final JButton XC ;
-    private JLabel Tina, counter ;
+    private JLabel Tina, counter, leaderboard ;
     private ButtonHandler BH ;
 
     private static Deck gamedeck ;
@@ -51,6 +52,7 @@ public class Map extends JPanel {
     public Map(Deck gamedeck, Track gametrack){
 	
 	drawn = 0 ;
+	win = false ;
 	
 	this.gamedeck = gamedeck ;
 	this.gametrack = gametrack ;
@@ -124,12 +126,14 @@ public class Map extends JPanel {
 	XC= new JButton("TileCoordinates");
 	Tina = new JLabel("GAME START");
 	counter = new JLabel(pl1.getName() + "'s turn");
+	leaderboard = new JLabel("LeaderBoard");
 	BH = new ButtonHandler() ;
 
 	//give buttons functionality
 	XD.addActionListener(BH);
 	XA.addActionListener(BH);
 	XC.addActionListener(BH);
+	leaderboard.setText("<html> LeaderBoard <br> " + pl1.getName() + " : " + pl1.getWins() + "<br>" + pl2.getName() + " : " + pl2.getWins() + "<br>" + pl3.getName() + " : " + pl3.getWins() + "<br>" + pl4.getName() + " : " + pl4.getWins() + "<br></html>") ;
 
 	//add objects to the map	
 	setLayout(null);
@@ -141,11 +145,14 @@ public class Map extends JPanel {
 	Tina.setSize(200,200);
 	counter.setLocation(725,100);
 	counter.setSize(150,50);
+	leaderboard.setLocation(725,400);
+	leaderboard.setSize(200,200);
 	add(XD);
 	add(XA);
 	//add(XC);
 	add(Tina);
 	add(counter);
+	add(leaderboard);
 	
     }
 
@@ -159,10 +166,32 @@ public class Map extends JPanel {
 
 	    //button 1
 	    if(e.getSource()==XD){
-		act(pCount) ;
-		pCount++ ;
-		if(pCount>=4)
-		    pCount = 0 ;
+		//change button function when a player wins to change 
+		if(win)
+		    {
+			for(Player p : players)
+			    {
+				p.update(gametrack.getStart()) ;
+			    }
+			gamedeck.shuffle() ;
+			counter.setText(pl1.getName() + "'s turn");
+			XD.setText("Draw Card") ;
+			repaint() ;
+			win = false ;
+			drawn = 0 ;
+			leaderboard.setText(
+				"<html> LeaderBoard <br> " 
+				+ pl1.getName() + " : " + pl1.getWins() + "<br>" 					+ pl2.getName() + " : " + pl2.getWins() + "<br>" 					+ pl3.getName() + " : " + pl3.getWins() + "<br>" 					+ pl4.getName() + " : " + pl4.getWins() + "<br>"
+				+ "</html>"
+			) ;
+		    }
+		else
+		    {
+			act(pCount) ;
+			pCount++ ;
+			if(pCount>=4)
+		    	    pCount = 0 ;
+		    }
 	    }
 
 	    //button 2
@@ -241,6 +270,7 @@ public class Map extends JPanel {
     public void act(int pCount)
     {
 		Player next = null ;
+		Player swtch = null ;
 		Card current = gamedeck.draw() ;
 		drawn++ ;
 		String txt = "Color drawn: " ;
@@ -256,15 +286,17 @@ public class Map extends JPanel {
 		    col = "YELLOW" ;
 		else if (current.getColor().equals(Color.GREEN))
 		    col = "GREEN" ;
-		else 
+		else if (current.getColor().equals(Color.BLUE))
 		    col = "BLUE" ;
+		else if (current.getColor().equals(Color.GRAY))
+		    col = "GRAY" ;
 
 		//movement string text
 		if (m == 1)
 		    mv = "one space forward!" ;
 		else if (m == 2)
 		    mv = "two spaces forward!" ;
-		else
+		else if (m == -1)
 		    mv = "one space backward!" ;
 
 		//player move
@@ -272,28 +304,28 @@ public class Map extends JPanel {
 		
 		if(pCount == 0)
 		{
-		    pl1.move(current) ;
+		    swtch = pl1.move(current) ;
 		    nm = pl1.getName() ;
 		    next = pl2 ;
 		    pCount++ ;
 		}
 		else if(pCount ==1)
 		{
-		    pl2.move(current) ;
+		    swtch = pl2.move(current) ;
 		    nm = pl2.getName() ;
 		    next = pl3 ;
 		    pCount++ ;
 		}
 		else if(pCount ==2)
 		{
-		    pl3.move(current ) ;
+		    swtch = pl3.move(current ) ;
 		    nm = pl3.getName() ;
 		    next = pl4 ;
 		    pCount++ ;
 		}
 		else 
 		{
-		    pl4.move(current) ;
+		    swtch = pl4.move(current) ;
 		    nm = pl4.getName() ;
 		    next = pl1 ;
 		    pCount =0 ;
@@ -313,10 +345,20 @@ public class Map extends JPanel {
 		if(!winner)
 		    {
 			//update GUI
-			Tina.setText("<html>" + 
+			if(current.getColor().equals(Color.GRAY))
+			    {
+				Tina.setText("<html>" + 
+				nm + " drew a <br> " 
+				+ col + " card <br> and switches place <br> " 
+				+ "with " + swtch.getName() + "</html>") ;
+			    }
+			else
+			    {
+				Tina.setText("<html>" + 
 				nm + " drew a <br> " 
 				+ col + " card <br> and moves <br> " 
 				+ mv + "</html>") ;
+			    }
 			counter.setText(next.getName() + "'s turn") ;
 			repaint() ;
 		    }
@@ -324,8 +366,11 @@ public class Map extends JPanel {
 		    {
 			Tina.setText("<html>" + next.getName() + " <br> has reached the end! <br>"
 						+ "Game Stats: <br>" + "Total Cards Drawn: <br>" + drawn + "</html>") ;
-			counter.setText("WINNER!!");
+			next.setWins(next.getWins()+1) ;
+			counter.setText("WINNER!!") ;
 			repaint() ;
+			XD.setText("Restart Game?") ;
+			win = true ;
 		    }
 
     }

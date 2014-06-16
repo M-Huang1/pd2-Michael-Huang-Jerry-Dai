@@ -12,7 +12,7 @@ public class Player{
     //-represents name of player, the order in which this player moves, its color, and its location
  
     private String name ;
-    private int order ;
+    private int order, wins ;
     private Color color ;
     private Tile loc ;
     private Track track ;
@@ -28,6 +28,7 @@ public class Player{
 	color = Color.WHITE ;
 	loc = new Tile() ;
 	track = null ;
+	wins = 0 ;
     }
 
     public Player(String name, int order, Color color, Tile loc, Track track)
@@ -37,6 +38,7 @@ public class Player{
 	this.color = color ;
 	this.loc = loc ;
 	this.track = track ;
+	wins = 0 ;
     }
 
     //methods
@@ -61,6 +63,17 @@ public class Player{
     public int getOrder()
     {
 	return order ;
+    }
+
+    //set/get win amount
+    public void setWins(int wins)
+    {
+	this.wins = wins ;
+    }
+
+    public int getWins()
+    {
+	return wins ;
     }
 
     //set/get color
@@ -125,11 +138,42 @@ public class Player{
     }
 	
     //player movement based on card drawn, animation
-    public void move(Card c){
+    public Player move(Card c){
 
+	Player p = null ;
 	int mv = c.getMovement() ;
 	Tile pTemp = getTile().getNext(); ;
+	getTile().getPlayers().remove(this) ;
 
+	//switch spot
+	if(c.getColor().equals(Color.GRAY))
+	    {
+		boolean loop = true ;
+		while(loop)
+		    {
+			if(!pTemp.getPlayers().isEmpty())
+			    {
+				pTemp.getPlayers().get(0).setTile(getTile()) ;
+				p = pTemp.getPlayers().get(0) ;
+				pTemp.remove(0) ;
+				setTile(pTemp) ;
+				loop = false ;
+			    }
+			else if(pTemp.getColor().equals(Color.BLACK))
+			    {
+				loop = false ;
+				pTemp = getTile() ;
+			    }
+			else
+			    pTemp = pTemp.getNext() ;
+			if(pTemp == null)
+			    loop = false ;
+		    }
+	    }
+	else	
+	    {
+
+	//regular movement
 	//forward movement
 	if(mv > 0)
 	    {
@@ -163,30 +207,32 @@ public class Player{
 	    {
 		pTemp = track.getStart() ;
 
-		if(!(getTile().getOrder()-4 < 0)
-		   && (!(pTemp.getOrder()-4 == 0)) )
+		if(getTile().getOrder()-4 > 0)
 		    {
-			while(pTemp.getOrder() != getTile().getOrder()-4)
+			while(pTemp.getOrder() < getTile().getOrder()-4)
 		    	    {
 				pTemp = pTemp.getNext() ;
-				
 		    	    }
 			while( pTemp.getColor() != c.getColor() )
 			    {
 				pTemp = pTemp.getNext() ;
-				
 			    }
 	    	    }
 	    }
+	}
        
-	update(pTemp);
+	update(pTemp) ;
+	return p ;
+
     }
 
     //update position on map
     public void update(Tile temp)
     {
 	setShape(new Ellipse2D.Double(temp.getXcor(),temp.getYcor(),20,20));
+	getTile().getPlayers().remove(this) ;
 	setTile(temp);
+	temp.add(this);
 	//repaint();
 	//<<<<<<< HEAD
 	//wait(500);

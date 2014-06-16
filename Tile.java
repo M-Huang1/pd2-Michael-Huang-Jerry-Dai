@@ -99,10 +99,10 @@ public class Tile{
     }
 
     //remove player from this tile
-    public void remove(Player p)
+    public void remove(int index)
     {
 	try{
-	    players.remove(p) ;
+	    players.remove(index) ;
 	}
 	catch(Exception e) {} 
     }
