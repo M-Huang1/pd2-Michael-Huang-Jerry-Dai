@@ -35,7 +35,7 @@ public class Start extends JPanel{
 	ButtonHandler BH= new ButtonHandler();
 	go.addActionListener(BH);
 	exit.addActionListener(BH);
-
+	help.addActionListener(BH);
 	add(help);
 	add(go);
 	add(exit);
@@ -62,12 +62,17 @@ public class Start extends JPanel{
 		JFrame frame = new JFrame("Game");
 		Map map = new Map(gamedeck, gametrack);
 		frame.add(map);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(900,750);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setSize(930,750);
 		frame.setVisible(true);
 	    }
 	    if(e.getSource()==exit){
 		System.exit(0);
+	    }
+	    if(e.getSource()==help){
+	
+		Help help = new Help();
+		help.setVisible(true);
 	    }
 	}
     }
