@@ -152,7 +152,6 @@ public class Map extends JPanel {
 	leaderboard.setLocation(725,400);
 	leaderboard.setSize(200,200);
 	add(XD);
-	add(XA);
 	add(Tina);
 	add(counter);
 	add(leaderboard);
