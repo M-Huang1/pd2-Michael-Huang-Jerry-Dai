@@ -92,7 +92,12 @@ public class Tile{
     }
 
     //interact with players on the tile
-    //get list of all players
+    //set/get list of all players
+    public void setPlayers()
+    {
+	players = new ArrayList<Player>() ;
+    }
+
     public ArrayList<Player> getPlayers()
     {
 	return players ;

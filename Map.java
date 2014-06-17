@@ -186,6 +186,13 @@ public class Map extends JPanel {
 				+ pl1.getName() + " : " + pl1.getWins() + "<br>" 					+ pl2.getName() + " : " + pl2.getWins() + "<br>" 					+ pl3.getName() + " : " + pl3.getWins() + "<br>" 					+ pl4.getName() + " : " + pl4.getWins() + "<br>"
 				+ "</html>"
 			) ;
+			
+			Tile temp = gametrack.getStart().getNext() ;
+			while(temp!=null)
+			    {
+				temp.setPlayers() ;
+				temp = temp.getNext() ;
+			    }
 		    }
 		else
 		    {
@@ -271,7 +278,6 @@ public class Map extends JPanel {
     //one player's actions in a round
     public void act(int pCount)
     {
-		Player curr = null ;
 		Player next = null ;
 		Player swtch = null ;
 		Card current = gamedeck.draw() ;
@@ -325,7 +331,6 @@ public class Map extends JPanel {
 		{
 		    swtch = pl1.move(current) ;
 		    nm = pl1.getName() ;
-		    curr = pl1 ;
 		    next = pl2 ;
 		    pCount++ ;
 		}
@@ -333,7 +338,6 @@ public class Map extends JPanel {
 		{
 		    swtch = pl2.move(current) ;
 		    nm = pl2.getName() ;
-		    curr = pl1 ;
 		    next = pl3 ;
 		    pCount++ ;
 		}
@@ -341,7 +345,6 @@ public class Map extends JPanel {
 		{
 		    swtch = pl3.move(current ) ;
 		    nm = pl3.getName() ;
-		    curr = pl1 ;
 		    next = pl4 ;
 		    pCount++ ;
 		}
@@ -349,7 +352,6 @@ public class Map extends JPanel {
 		{
 		    swtch = pl4.move(current) ;
 		    nm = pl4.getName() ;
-		    curr = pl1 ;
 		    next = pl1 ;
 		    pCount =0 ;
 		}
@@ -380,20 +382,23 @@ public class Map extends JPanel {
 				Tina.setText("<html>" + 
 				nm + " drew a <br> " 
 				+ col + " card <br> and switches place <br> " 
-				+ "with " + swtch.getName() + "!<br>" + draw2 + "</html>") ;
+				+ "with " + swtch.getName() + "!<br>" 
+				+ draw2 + "</html>") ;
 			    }
 			else if(current.getColor().equals(Color.WHITE))
 			    {
 				Tina.setText("<html>" + 
 				nm + " drew a <br> " 
-				+ col + " card <br> but nothing happened!<br>" + draw2 + "</html>") ;
+				+ col + " card <br> but nothing happened!<br>" 
+				+ draw2 + "</html>") ;
 			    }
 			else if(current.getColor().equals(Color.BLACK))
 			    {
 				gamedeck.shuffle() ;
 				Tina.setText("<html>" + 
 				nm + " drew a <br> " 
-				+ col + " card <br> which shuffled the deck!<br>" + draw2 + "</html>") ;
+				+ col + " card <br> which shuffled the deck!<br>" 
+				+ draw2 + "</html>") ;
 			    }
 			else
 			    {
@@ -429,7 +434,6 @@ public class Map extends JPanel {
 			repaint() ;
 			XD.setText("Restart Game?") ;
 			win = true ;
-
 		    }
 
     }

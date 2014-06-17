@@ -153,10 +153,8 @@ public class Player{
 		    {
 			if(!pTemp.getPlayers().isEmpty())
 			    {
-				pTemp.getPlayers().get(0).setTile(getTile()) ;
 				p = pTemp.getPlayers().get(0) ;
-				pTemp.remove(0) ;
-				setTile(pTemp) ;
+				p.update(getTile()) ;
 				loop = false ;
 			    }
 			else if(pTemp.getColor().equals(Color.BLACK))
@@ -183,35 +181,33 @@ public class Player{
 	else	
 	    {
 
-	//regular movement
-	//forward movement
-	if(mv > 0)
-	    {
-		while(mv > 0)
-		    {
-			try
-			{
-	    		    while(!pTemp.getColor().equals(c.getColor()))
+		//regular movement
+		//forward movement
+		if(mv > 0)
+	    	    {
+			while(mv > 0)
+		    	    {
+				try
+				   {
+	    		    		while(!pTemp.getColor().equals(c.getColor()))
+				   	   {
+	   			    		pTemp = pTemp.getNext();			 
+	    			   	   }
+					}	
+				//exception means the player has reached the end of the track, has won
+				catch(Exception e)
 				{
-	   			    pTemp = pTemp.getNext();
-				 
-	    			}
-			}
-			//exception means the player has reached the end of the track, has won
-			catch(Exception e)
-			{
-	    		    pTemp= track.getEnd();  
-	    		    
-			}
-			//this allows movement to loop if a card with movement 2 is drawn
-			if(mv > 1)
-			    {
-			    	pTemp = pTemp.getNext() ;
-			
-			    }
-			mv-- ;
-		    }
-	    }
+	    		    	    pTemp= track.getEnd();     
+				}
+
+				//this allows movement to loop if a card with movement 2 is drawn
+				if(mv > 1)
+			    	{
+			    	    pTemp = pTemp.getNext() ;	
+			    	}
+				mv-- ;
+		    	    }
+	    	    }
 	//backward movement
 	else
 	    {
@@ -243,12 +239,6 @@ public class Player{
 	getTile().getPlayers().remove(this) ;
 	setTile(temp);
 	temp.add(this);
-	//repaint();
-	//<<<<<<< HEAD
-	//wait(500);
-	//=======
-	//wait(500);
-	//>>>>>>> 7de851144046793f2b3155b3fb4aa862de7d35dc
     }
 
     //wait function
