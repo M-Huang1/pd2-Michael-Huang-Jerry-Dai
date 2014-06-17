@@ -170,6 +170,16 @@ public class Player{
 			    loop = false ;
 		    }
 	    }
+	//dummy card
+	else if(c.getColor().equals(Color.WHITE))
+	    {
+		pTemp = getTile() ;
+	    }
+	//shuffle card
+	else if(c.getColor().equals(Color.BLACK))
+	    {
+		pTemp = getTile() ;
+	    }
 	else	
 	    {
 

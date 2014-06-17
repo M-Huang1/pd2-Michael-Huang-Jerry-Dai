@@ -20,7 +20,7 @@ public class Game{
         Map map = new Map(gamedeck, gametrack);
         frame.add(map);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(900,750);
+        frame.setSize(925,750);
         frame.setVisible(true);
 
     }

@@ -133,7 +133,11 @@ public class Map extends JPanel {
 	XD.addActionListener(BH);
 	XA.addActionListener(BH);
 	XC.addActionListener(BH);
-	leaderboard.setText("<html> LeaderBoard <br> " + pl1.getName() + " : " + pl1.getWins() + "<br>" + pl2.getName() + " : " + pl2.getWins() + "<br>" + pl3.getName() + " : " + pl3.getWins() + "<br>" + pl4.getName() + " : " + pl4.getWins() + "<br></html>") ;
+	leaderboard.setText("<html> LeaderBoard <br> " 
+	+ pl1.getName() + " : " + pl1.getWins() + "<br>" 
+	+ pl2.getName() + " : " + pl2.getWins() + "<br>" 
+	+ pl3.getName() + " : " + pl3.getWins() + "<br>" 
+	+ pl4.getName() + " : " + pl4.getWins() + "<br></html>") ;
 
 	//add objects to the map	
 	setLayout(null);
@@ -149,7 +153,6 @@ public class Map extends JPanel {
 	leaderboard.setSize(200,200);
 	add(XD);
 	add(XA);
-	//add(XC);
 	add(Tina);
 	add(counter);
 	add(leaderboard);
@@ -269,6 +272,7 @@ public class Map extends JPanel {
     //one player's actions in a round
     public void act(int pCount)
     {
+		Player curr = null ;
 		Player next = null ;
 		Player swtch = null ;
 		Card current = gamedeck.draw() ;
@@ -277,6 +281,9 @@ public class Map extends JPanel {
 		String col = "" ;
 		String nm = "" ;
 		String mv = "" ;
+		String n = "" ;	
+		String draw2 = "" ;
+		boolean dub = current.getDuble() ;
 		int m = current.getMovement() ;
 
 		//color string text
@@ -289,15 +296,28 @@ public class Map extends JPanel {
 		else if (current.getColor().equals(Color.BLUE))
 		    col = "BLUE" ;
 		else if (current.getColor().equals(Color.GRAY))
-		    col = "GRAY" ;
+		    col = "GRAY" ;	
+		else if (current.getColor().equals(Color.WHITE))
+		    col = "WHITE" ;
+		else if (current.getColor().equals(Color.BLACK))
+		    col = "BLACK" ;
 
 		//movement string text
 		if (m == 1)
-		    mv = "one space forward!" ;
+		    {
+			mv = "space forward!" ;
+			n = "one" ;
+		    }
 		else if (m == 2)
-		    mv = "two spaces forward!" ;
+		    {
+			mv = "spaces forward!" ;
+			n = "two" ;
+		    }
 		else if (m == -1)
-		    mv = "one space backward!" ;
+		    {
+			mv = "space backward!" ;
+			n = "one" ;
+		    }
 
 		//player move
 
@@ -306,6 +326,7 @@ public class Map extends JPanel {
 		{
 		    swtch = pl1.move(current) ;
 		    nm = pl1.getName() ;
+		    curr = pl1 ;
 		    next = pl2 ;
 		    pCount++ ;
 		}
@@ -313,6 +334,7 @@ public class Map extends JPanel {
 		{
 		    swtch = pl2.move(current) ;
 		    nm = pl2.getName() ;
+		    curr = pl1 ;
 		    next = pl3 ;
 		    pCount++ ;
 		}
@@ -320,6 +342,7 @@ public class Map extends JPanel {
 		{
 		    swtch = pl3.move(current ) ;
 		    nm = pl3.getName() ;
+		    curr = pl1 ;
 		    next = pl4 ;
 		    pCount++ ;
 		}
@@ -327,6 +350,7 @@ public class Map extends JPanel {
 		{
 		    swtch = pl4.move(current) ;
 		    nm = pl4.getName() ;
+		    curr = pl1 ;
 		    next = pl1 ;
 		    pCount =0 ;
 		}
@@ -342,6 +366,13 @@ public class Map extends JPanel {
 			    }
 		    }
 
+		//if card is a double draw card
+		if(dub)
+		    {
+			draw2 = nm + " can draw another card!" ;
+		    }
+
+		//regular text change
 		if(!winner)
 		    {
 			//update GUI
@@ -350,27 +381,56 @@ public class Map extends JPanel {
 				Tina.setText("<html>" + 
 				nm + " drew a <br> " 
 				+ col + " card <br> and switches place <br> " 
-				+ "with " + swtch.getName() + "</html>") ;
+				+ "with " + swtch.getName() + "!<br>" + draw2 + "</html>") ;
+			    }
+			else if(current.getColor().equals(Color.WHITE))
+			    {
+				Tina.setText("<html>" + 
+				nm + " drew a <br> " 
+				+ col + " card <br> but nothing happened!<br>" + draw2 + "</html>") ;
+			    }
+			else if(current.getColor().equals(Color.BLACK))
+			    {
+				gamedeck.shuffle() ;
+				Tina.setText("<html>" + 
+				nm + " drew a <br> " 
+				+ col + " card <br> which shuffled the deck!<br>" + draw2 + "</html>") ;
 			    }
 			else
 			    {
 				Tina.setText("<html>" + 
 				nm + " drew a <br> " 
 				+ col + " card <br> and moves <br> " 
-				+ mv + "</html>") ;
+				+ n + " " + col + " " + mv 
+				+ "<br>" + draw2
+				+ "</html>") ;
 			    }
-			counter.setText(next.getName() + "'s turn") ;
-			repaint() ;
+			if(dub)
+			    counter.setText(nm + "'s turn") ;
+			else
+			    {
+				counter.setText(next.getName() + "'s turn") ;
+				repaint() ;
+			    }
+			if(dub)
+			    act(pCount-1) ;
+
 		    }
 		else
 		    {
-			Tina.setText("<html>" + next.getName() + " <br> has reached the end! <br>"
-						+ "Game Stats: <br>" + "Total Cards Drawn: <br>" + drawn + "</html>") ;
+			Tina.setText("<html>" 
+			+ next.getName() 
+			+ " <br> has reached the end! <br>"
+			+ "Game Stats: <br>" 
+			+ "Total Cards Drawn: <br>" 
+			+ drawn + "</html>") ;
+
 			next.setWins(next.getWins()+1) ;
 			counter.setText("WINNER!!") ;
 			repaint() ;
 			XD.setText("Restart Game?") ;
 			win = true ;
+
 		    }
 
     }

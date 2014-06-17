@@ -11,7 +11,7 @@ public class Deck{
     //-note: LENGTH must be 40
     private Stack stack, tempdeck, bottom ;
     private int length ;
-    private static final int LENGTH = 45 ;
+    private static final int LENGTH = 68 ;
     
     //constructors
     public Deck()
@@ -47,33 +47,65 @@ public class Deck{
 	//creates 20 1-tile movement cards
 	for(int x = 0 ; x < 5 ; x++)
 	    {
-		cards.add(new Card(1,Color.RED)) ;
-		cards.add(new Card(1,Color.BLUE)) ;
-		cards.add(new Card(1,Color.GREEN)) ;
-		cards.add(new Card(1,Color.YELLOW)) ;
+		cards.add(new Card(1,Color.RED,false)) ;
+		cards.add(new Card(1,Color.BLUE,false)) ;
+		cards.add(new Card(1,Color.GREEN,false)) ;
+		cards.add(new Card(1,Color.YELLOW,false)) ;
 	    }
 	//creates 8 2-tile movement cards
 	for(int x = 0 ; x < 2 ; x++)
 	    {
-		cards.add(new Card(2,Color.RED)) ;
-		cards.add(new Card(2,Color.BLUE)) ;
-		cards.add(new Card(2,Color.GREEN)) ;
-		cards.add(new Card(2,Color.YELLOW)) ;
+		cards.add(new Card(2,Color.RED,false)) ;
+		cards.add(new Card(2,Color.BLUE,false)) ;
+		cards.add(new Card(2,Color.GREEN,false)) ;
+		cards.add(new Card(2,Color.YELLOW,false)) ;
 	    }
 	//creates 12 -1-tile movement cards
 	for(int x = 0 ; x < 3 ; x++)
 	    {
-		cards.add(new Card(-1,Color.RED)) ;
-		cards.add(new Card(-1,Color.BLUE)) ;
-		cards.add(new Card(-1,Color.GREEN)) ;
-		cards.add(new Card(-1,Color.YELLOW)) ;
+		cards.add(new Card(-1,Color.RED,false)) ;
+		cards.add(new Card(-1,Color.BLUE,false)) ;
+		cards.add(new Card(-1,Color.GREEN,false)) ;
+		cards.add(new Card(-1,Color.YELLOW,false)) ;
 	    }
-	//creates 5 switch cards
-	for(int x = 0 ; x < 5 ; x++)
+
+	//creates 8 switch cards
+	for(int x = 0 ; x < 8 ; x++)
 	    {
-		cards.add(new Card(0,Color.GRAY)) ;
+		cards.add(new Card(0,Color.GRAY,false)) ;
 	    }
-	    
+	
+	//creates 3 dummy cards
+	for(int x = 0 ; x < 3 ; x++)
+	    {
+		cards.add(new Card(0,Color.WHITE,false)) ;
+	    }
+
+	//creates 2 shuffle cards
+	for(int x = 0 ; x < 2 ; x++)
+	    {
+		cards.add(new Card(0,Color.BLACK,false)) ;
+	    }
+
+	//creates double cards ( draw twice from the deck in one turn )
+	for(int x = 0 ; x < 2 ; x++)
+	    {
+		cards.add(new Card(1,Color.RED,true)) ;
+		cards.add(new Card(1,Color.BLUE,true)) ;
+		cards.add(new Card(1,Color.GREEN,true)) ;
+		cards.add(new Card(1,Color.YELLOW,true)) ;
+		cards.add(new Card(2,Color.RED,true)) ;
+		cards.add(new Card(2,Color.BLUE,true)) ;
+		cards.add(new Card(2,Color.GREEN,true)) ;
+		cards.add(new Card(2,Color.YELLOW,true)) ;
+		cards.add(new Card(-1,Color.RED,true)) ;
+		cards.add(new Card(-1,Color.BLUE,true)) ;
+		cards.add(new Card(-1,Color.GREEN,true)) ;
+		cards.add(new Card(-1,Color.YELLOW,true)) ;
+		cards.add(new Card(0,Color.GRAY,true)) ;
+		cards.add(new Card(0,Color.WHITE,true)) ;
+		cards.add(new Card(0,Color.BLACK,true)) ;
+	    }
 
 	for(Card c : cards)
 	    {

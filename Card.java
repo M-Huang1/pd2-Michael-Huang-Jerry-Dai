@@ -9,6 +9,7 @@ public class Card{
     //instance variables
     //-represents how many spaces to move based on color, and the color of the card
     private int movement ;
+    private boolean duble ;
     private Color color ;
 
     //constructors
@@ -19,10 +20,11 @@ public class Card{
 	color = Color.WHITE ;
     }
 
-    public Card(int movement, Color color)
+    public Card(int movement, Color color, boolean duble)
     {
         this.movement = movement ;
 	this.color = color ;
+	this.duble = duble ;
     }
 
     //methods
@@ -37,6 +39,12 @@ public class Card{
     public int getMovement()
     {
 	return movement ;
+    }
+
+    //get duble
+    public boolean getDuble()
+    {
+	return duble ;
     }
 
 }
